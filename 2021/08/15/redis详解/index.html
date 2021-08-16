@@ -19,7 +19,7 @@
     <meta name="keywords" content="kunstudy">
 
 
-<title>redis详解 | kunstudy</title>
+<title>redis | kunstudy</title>
 
 
 
@@ -133,11 +133,73 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">redis详解</h1>
+            <h1 class="post-title">redis</h1>
             
                 <div class="post-meta">
                     
@@ -153,9 +215,7 @@
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
-                            
-                                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/NoSql/">NoSql</a>
+                                <a href="/categories/Redis/">Redis</a>
                             
                         </span>
                     
@@ -164,7 +224,22 @@
         </header>
 
         <div class="post-content">
-            
+            <h2 id="redis基础"><a href="#redis基础" class="headerlink" title="redis基础"></a>redis基础</h2><ul>
+<li>为什么使用redis?</li>
+</ul>
+<p>因为传统的关系型数据库如Mysql已经不能适用所有的场景了，比如秒杀的库存扣减，APP首页的访问流量高峰等等，都很容易把数据库打崩，所以引入了缓存中间件，目前市面上比较常用的缓存中间件有<strong>Redis</strong>和<strong>Memcached</strong>不过中和考虑了他们的优缺点，最后选择了Redis。</p>
+<ul>
+<li>redis有哪些数据结构？</li>
+</ul>
+<p><strong>String</strong>、<strong>Hash</strong>、<strong>List</strong>、<strong>Set</strong>、<strong>SortedSet</strong>。还需要加上下面几种数据结构<strong>HyperLogLog、Geo、Pub/Sub</strong>。还玩过<strong>Redis Module</strong>，像<strong>BloomFilter，RedisSearch，Redis-ML</strong></p>
+<ul>
+<li>大量的key设置同一过期时间，注意什么？</li>
+</ul>
+<p>如果大量的key过期时间设置的过于集中，到过期的那个时间点，<strong>Redis</strong>可能会出现短暂的卡顿现象。严重的话会出现缓存雪崩，我们一般需要在时间上加一个随机值，使得过期时间分散一些。</p>
+<ul>
+<li></li>
+</ul>
+<h2 id="redis常见的故障和解决方案"><a href="#redis常见的故障和解决方案" class="headerlink" title="redis常见的故障和解决方案"></a>redis常见的故障和解决方案</h2><h2 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h2>
         </div>
 
         
