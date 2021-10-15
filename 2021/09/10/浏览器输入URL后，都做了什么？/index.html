@@ -133,6 +133,68 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
@@ -340,6 +402,20 @@
 <li>服务器处理请求返回HTTP报文</li>
 <li>浏览器渲染页面</li>
 <li>断开连接：TCP四次挥手</li>
+</ol>
+<h3 id="DNS解析流程"><a href="#DNS解析流程" class="headerlink" title="DNS解析流程"></a><strong>DNS解析流程</strong></h3><ol>
+<li>首先查看自己的浏览器缓存有没有对应的ip记录，同时还要查看一下本机文件里面有没有对应的记录</li>
+<li>浏览器要进行域名解析需要调用解析器来实现。解析器就是一段代码。该代码用来根据域名来获取ip地址。解析器就相当于DNS客户端。</li>
+<li>DNS客户端向DNS服务器发送查询ip地址的请求。怎么查询到DNS服务器地址呢，在网络设置里就能查到，DNS服务器的地址。如果没有地址，或者DNS服务器设置错误，就会出现qq可以登录，而网页打不开的情况。</li>
+<li>该DNS服务器又称为本地DNS服务器。该服务器有ISP（互联网服务提供商）来管理的。</li>
+<li>DNS服务器收到请求后，首先查看自己的缓存，如果有则直接返回（并且会标注非权威non-authoritative）如果没有</li>
+<li>首先咨询根域名服务器地址（一共有13个）（接下来就是DNS服务器做的事）</li>
+<li>向根域名服务器咨询com的服务器地址，返回com服务器地址</li>
+<li>咨询com域名服务器</li>
+<li>返回url的服务器地址</li>
+<li>咨询url服务器咨询ip地址</li>
+<li>返回url的ip地址</li>
+<li>将ip返回给浏览器的IP解析器（并在本地缓存起来）</li>
 </ol>
 
         </div>
