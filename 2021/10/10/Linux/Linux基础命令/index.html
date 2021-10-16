@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>Linux基础命令 | kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Linux基础命令</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十月 10, 2021&nbsp;&nbsp;13:15:23</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Linux/">Linux</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><strong>常用核心目录</strong></p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/</code></td>
+<td>根目录</td>
+</tr>
+<tr>
+<td><code>/bin</code></td>
+<td>存储二进制可执行文件，如ls, cat , uname ,tar 等</td>
+</tr>
+<tr>
+<td><code>/sbin</code></td>
+<td>存储二进制可执行文件，通常是系统管理员使用的系统级别命令，如ifconfig, systemctl</td>
+</tr>
+<tr>
+<td><code>/etc</code></td>
+<td>存放系统管理与配置文件</td>
+</tr>
+<tr>
+<td><code>/proc</code></td>
+<td>一般存放系统的相关信息，比如用户信息passwd, CPU信息cpuinfo，内存信息meminfo</td>
+</tr>
+<tr>
+<td><code>/root</code></td>
+<td>超级用户root的主目录，root的Home</td>
+</tr>
+<tr>
+<td><code>/home</code></td>
+<td>普通用户的主目录，如admin的Home路径是/home/admin</td>
+</tr>
+</tbody></table>
+<p><strong>核心软件库</strong></p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/usr</code></td>
+<td>用于存放系统应用程序，这是最庞大的目录，几乎所有要用到的应用程序都安装在这个目录，类似程序应用的根目录</td>
+</tr>
+<tr>
+<td><code>/usr/bin</code></td>
+<td>众多的第三方应用，比如vim,wget, whereis等</td>
+</tr>
+<tr>
+<td><code>/usr/lib</code></td>
+<td>存放第三方程序的共享库</td>
+</tr>
+<tr>
+<td><code>/usr/local</code></td>
+<td>类似/usr目录，不过通常用于存放用户自己安装应用程序文件</td>
+</tr>
+<tr>
+<td><code>/usr/local/bin</code></td>
+<td>存放全局用户使用的二进制执行文件，比如自己安装的应用程序的shell，或自己写的shell</td>
+</tr>
+<tr>
+<td><code>/usr/local/lib</code></td>
+<td>存放自行安装的应用的共享库</td>
+</tr>
+<tr>
+<td>非常用核心目录</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>非常用核心目录</strong></p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/dev</code></td>
+<td>用于存放设备的目录</td>
+</tr>
+<tr>
+<td><code>/boot</code></td>
+<td>存放系统引导时的各种文件</td>
+</tr>
+<tr>
+<td><code>/mnt</code></td>
+<td>用户临时挂载其他的文件系统目录</td>
+</tr>
+<tr>
+<td><code>/tmp</code></td>
+<td>用于存放各种临时目录</td>
+</tr>
+<tr>
+<td><code>/lib</code></td>
+<td>存放系统程序所需要的共享库或内核模块，类似windows的dll库</td>
+</tr>
+<tr>
+<td><code>/var</code></td>
+<td>用于存放运行时需要改变数据的文件，比如日志文件</td>
+</tr>
+</tbody></table>
+<p><strong>系统基础命令</strong></p>
+<ul>
+<li><p>显示机器的处理器架构<br>arch , uname -m</p>
+</li>
+<li><p>显示正在使用的系统内核(版本)<br>uname -r<br>cat /proc/version</p>
+</li>
+<li><p>查看当前系统的发型版本(非内核)<br>lsb_release -a Redhat、SuSE、Debian等发行版<br>cat /etc/issue<br>cat /etc/{centos-release} Centos</p>
+</li>
+<li><p>显示CPU信息<br>cat /proc/cpuinfo<br>cat /proc/cpuinfo| grep “cpu cores”| uniq 核心数<br>cat /proc/cpuinfo| grep “processor”| wc -l逻辑核心数（线程数）<br>cat /proc/cpuinfo | grep name型号</p>
+</li>
+<li><p>显示内存信息<br>cat /proc/meminfo</p>
+</li>
+<li><p>显示系统当前时间<br>data</p>
+</li>
+<li><p>显示系统当前的日历<br>cal</p>
+</li>
+</ul>
+<p><strong>进程管理</strong></p>
+<ul>
+<li><p>查看当前的消耗资源最多的进程动态<br>top<br>top -c 显示详细的进程信息</p>
+</li>
+<li><p>查看当前系统的进程状态<br>ps<br>ps -ef 显示所有的进程信息，连同命令行，PID等信息<br>ps -aux 显示所有的进程信息，连同命令行，PID 以及 CPU, 内存使用量</p>
+</li>
+<li><p>杀死进程<br>kill {PID} 缓杀死PID号为xxx的进程，等待进程执行完毕后杀死，可能杀不死<br>kill -9 {PID} 不管进程是否有任务正在进行，立即杀死，可能会丢失数据</p>
+</li>
+</ul>
+<p><strong>网络</strong></p>
+<ul>
+<li><p>查看ip地址<br>ifconfig<br>ip addr</p>
+</li>
+<li><p>查看Linux中网络系统状态信息<br>netstat,ss<br>netstat -p,ss -pl 查看进程使用的socket 显示正在使用Socket的程序识别码和程序名称<br>netstat -an 在netstat输出中不显示主机，端口和用户名(host, port or user)</p>
+</li>
+<li><p>列出所有端口 (包括监听和未监听的)<br>netstat -a 列出所有端口<br>netstat -at 列出所有tcp端口<br>netstat -au 列出所有udp端口</p>
+</li>
+<li><p>列出所有处于监听状态的 Sockets<br>netstat -l 只显示监听端口<br>netstat -lt 只列出所有监听 tcp 端口<br>netstat -lu 只列出所有监听 udp 端口<br>netstat -lx 只列出所有监听 UNIX 端口</p>
+</li>
+<li><p>查看端口号为XX的进程的PID<br>lsof -i :{port}</p>
+</li>
+</ul>
+<p><strong>磁盘管理</strong></p>
+<ul>
+<li>显示已经挂载的分区列表<br>df -h</li>
+<li>估算目录dir已经使用的磁盘空间<br>du -sh {dir}</li>
+</ul>
+<p><strong>用户管理</strong></p>
+<ul>
+<li>概念</li>
+</ul>
+<p><code>UID</code> 用户ID, 系统其实只记录ID, 用户名只是方便用户使用的ID映射<br><code>GID</code> 用户组ID, 同理，每个用户可以加入多个用户组<br><code>有效用户组</code>有效用户组是当前用户实际操作时所生效的用户组，用户属于多个组，创建文件时，文件应该属于哪个组</p>
+<ul>
+<li><strong>查看用户,用户组,用户密码源文件</strong></li>
+</ul>
+<p>cat /etc/group 查看用户组源文件（组名称：组密码：GID：组成员）<br>cat /etc/passwd 查看用户源文件 (注册名：密码：UID：GID：用户名：用户主目录：所用的shell)<br>cat /etc/shadwos 查看用户密码(加密了)<br>grep {username} /etc/passwd /etc/shadow /etc/group 查看某个用户的全部相关定义</p>
+<ul>
+<li>用户</li>
+</ul>
+<p>useradd {username} 新增一个用户，centos下自动创建home, 设置shell；ubuntu下是不完整的user<br>adduser {username} 新增一个用户，ubuntu下建议使用该命令<br>userdel {username} 删除用户，同时删除/etc下的相关的定义信息，但不删除Home<br>userdel -r {username} 彻底删除用户，包含Home<br>passwd {username} {password} 修改用户密码<br>chage -{option} {username} 修改用户密码的有效期<br>usermod xxxx {username} 修改账户的信息</p>
+<ul>
+<li>用户组</li>
+</ul>
+<p>groups {username} username用户属于那些用户组（如有多个，第一个是有效用户组）<br>newgrp {group-name} 为当前用户切换xxx为有效用户组<br>groupadd {group-name} 添加一个新用户组，Centos,Ubuntu<br>addgroup {group-name} 添加一个新用户组，Ubuntu<br>groupdel {group-name} 删除一个用户组<br>groupmod xxx {group-name} 修改用户组的信息</p>
+<ul>
+<li>显示登陆用户</li>
+</ul>
+<p>who 显示目前登录系统的所有用户信息</p>
+<p>whoami 显示目前session下，登录用户是谁</p>
+<ul>
+<li><strong>切换账户 | 重登 | 注销</strong></li>
+</ul>
+<p><code>su &#123;user&#125;</code> 切换user账户<br><code>login</code> 重新登录，可切换账户<br><code>logout</code> 登出<br><code>exit</code> 退出，登出</p>
+<p><strong>权限管理</strong></p>
+<p>文件目录的权限和类别有10位符号表示，第一位表示类型，后9位表示权限</p>
+<p>第一位-是文件，d是目录，|是连接文件，b可供存储的接口设备，c是键盘鼠标等<br>[2,4]位是当前用户的读写权限，[5,7]位是所属用户组的读写权限，[8,10]是其他所有用户的读写权限<br>读写执行权限</p>
+<p>r 读取属性, 4<br>w 写入属性, 2<br>x 执行属性, 1</p>
+<ul>
+<li><strong>改变文件或目录所属的用户组</strong></li>
+</ul>
+<p><code>chgrp &#123;group&#125; &#123;file or path&#125;</code> 将file或path的所属用户组更改为group<br><code>chgrp -R &#123;group&#125; &#123;file or path&#125;</code> 如果是目录，则递归修改子路径下的所有目录和文件所属用户组为group</p>
+<ul>
+<li><strong>改变文件或目录的所有者或用户组</strong></li>
+</ul>
+<p>chown {user} {file or path} 将file或path的所有者更改为user<br>chown {user:group} {file or path} 将file或path的所有者更改为user, 用户组更改为group<br>chown -R {xxx} {xxx} 递归子路径更改权限</p>
+<ul>
+<li><strong>改变文件或目录的权限</strong></li>
+</ul>
+<p>chmod -{option} {args} {file or path} 修改file或path的权限根据args修改option所代表的权限<br>chmod -R -{option} {args} {file or path} 递归子路径<br>chmod u=rwx,g=rwx,o=rwx {file or path} ,chmod 777 {file or path}给file或path的用户，用户组，其他用房都给全部读写权限<br>chmod u+x,0-x {file} file的用户权限增加执行功能，其他用户取消执行功能<br>chmod 744 {file} file文件除了当前用户有所有读写执行权限，其他用户都只有可读权限</p>
+<p><strong>关机，重启</strong></p>
+<ul>
+<li>关机</li>
+</ul>
+<p><code>shutdown -h now</code></p>
+<p><code>init 0</code></p>
+<p><code>telinit 0</code></p>
+<ul>
+<li>定时关机</li>
+</ul>
+<p><code>shutdown -h &#123;hours&#125;:&#123;minutes&#125; &amp;</code> 定时关机<br><code>shutdown -c</code> 取消定时关机</p>
+<ul>
+<li>重启</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shutdown -r now</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p><strong>文件与目录</strong></p>
+<ul>
+<li><p>概念<br>.当前目录<br>..父级目录<br>-上次所在的目录<br>/ 根目录<br>~ home目录<br>./{path} 当前目录的子路径<br>/{path}根目录的子路径</p>
+</li>
+<li><p>进入目录<br>cd {path}<br>cd 进入个人账户目录<br>cd .. 进入上级目录<br>cd ../.. 进入上两级目录<br>cd -进入上次所在的目录<br>cd home,cd ~ 进入Home<br>cd / 进入根目录</p>
+</li>
+<li><p>显示当前路径<br>pwd</p>
+</li>
+<li><p>显示文件和目录<br>ls,ls -F 查看当前路径下的文件<br>ls -a 查看当前路径下的所有文件，包含隐藏文件<br>ls -l 查看当前路径下的所有文件的详细信息</p>
+</li>
+<li><p>创建文件或目录<br>touch {file1} 创建一个叫file1的空文件<br>mkdir {dir1} 创建名叫dir1的目录<br>mkdir {dir1} {dir2} 创建多个目录<br>mkdir -p {dir1}/{dir2}/{dir3} 创建一个目录树</p>
+</li>
+<li><p>删除目录或文件<br>rm {file1} 删除file1文件<br>rmdir {dir1}删除一个空目录<br>rm -r {dir1} 删除一个目录及其下的内容（递归删除）</p>
+</li>
+<li><p>移动文件或目录<br>mv {source} {target} 移动source到target位置(文件or目录)</p>
+</li>
+<li><p>复制文件或目录<br>cp {source} {target}复制source到target上(文件或目录)<br>cp -r {source} {target}复制source以及子目录(文件)到target位置上，递归复制</p>
+</li>
+</ul>
+<p>打包和压缩</p>
+<ul>
+<li>各个不同后缀的含义如下：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.tar打包格式：tar程序打包的文件，并没有压缩过</span><br><span class="line">.z格式：compress程序压缩的文件</span><br><span class="line">.gz格式：gzip程序压缩的文件</span><br><span class="line">.bz2格式：bzip2程序压缩的文件</span><br><span class="line">.tar.gz格式：tar程序打包的文件，经过 gzip 的压缩</span><br><span class="line">.tar.bz2格式：tar程序打包的文件，经过 bzip2 的压缩</span><br><span class="line">.tar.xz格式：tar程序打包的文件，经过xz格式的压缩</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>概念<br>-c 创建，压缩<br>-t 查询<br>-x 解压，还原<br>-vf 我们就当做是必备固定格式，-v是显示指令过程，-f必需在最后面，指定文件<br>-z 对应tar.gz格式<br>-j 对应tar.bz2格式<br>-J对应tar.xz格式<br>-Z对应tar.z格式</p>
+</li>
+<li><p>tar命令打包压缩<br>tar -cvf {hello.tar} {hello} 将hello文件打包，不经过压缩<br>tar -zcvf {hello.tar.gz} {hello} 将hello文件打包，经过gz格式压缩<br>tar -jcvf {hello.tar.bz2} {hello} 将hello文件打包，经过bz2格式压缩<br>tar -Jcvf {hello.tar.xz} {hello} 将hello文件打包，经过xz格式压缩<br>tar -Zcvf {hello.tar.z} {hello} 将hello文件打包，经过z格式压缩</p>
+</li>
+<li><p>tar命令解压<br>tar -xvf {hello}.tar 将hello.tar解压还原成hello<br>tar -zxvf {hello}.tar.gz 将hello.tar.gz解压，还原成hello<br>tar -jxvf {hello}.tar.bz2 将hello.tar.bz2解压，还原成hello<br>tar -Jxvf {hello}.tar.xz 将hello.tar.xz解压，还原成hello<br>tar -Zxvf {hello}.tar.z 将hello.tar.z解压，还原成hello</p>
+</li>
+<li><p>jar格式压缩和解压<br>jar -cvf {hello.jar} {hello} 将hello文件打包压缩成hello.jar<br>jar -xvf {hello}.jar 将hello.jar解压，还原成hello</p>
+</li>
+<li><p>7z格式压缩和解压<br>7z a {hello.7z or hello.rar} {hello} 将hello文件打包成hello.7z或hello.rar<br>7z x {hello}.7z, 7x x {hello}.rar 将hello.7z 或hello.rar解压还原成hello</p>
+</li>
+<li><p>zip格式压缩和解压<br>zip -r {hello.zip} {hello} 将hello文件打包压缩成hello.zip<br>upzip {hello}.zip 将hello.zip解压还原为hello</p>
+</li>
+</ul>
+<p><strong>文件操作与处理</strong></p>
+<ul>
+<li><p>文件搜索<br>find {/} -name {file1} 从/路径下查找名称为file1的文件或目录<br>find {/} -user {user1} 从/路径下查找属于user1用户的文件或路径<br>find {/} -type f -atime +10 搜索根路径下，过去10天未被使用过的执行文件<br>find {/} -type f -mtime -10 搜索根路径下，过去10天内被创建或修改过的文件<br>locate {fileName} 配合索引数据库的形式进行查找file文件的位置，与find类似，但性能更好<br>whereis {fileName} 查找二进制文件，比如命令grep,man等源文件的位置<br>which {fileName} 查找命令源文件的实际存储位置，判断该命令到底执行的是存储在那个位置的命令</p>
+</li>
+<li><p>查看文件内容<br>cat {file1} 查看文件内容，从头开始<br>tac {file1} 查看文件内容，从尾开始<br>cat {file1} | grep -v ^# 查看文件中不以#开头的内容<br>more {file1} 查看一个长文本的内容，类似Less<br>less {file1} 查看一个长文本内容，分页浏览，允许向前，向后翻页，Q退出<br>head -2 {file1}查看file1文件的前两行<br>tail -2 {file1} 查看file1文件的后两行<br>tail -f {file1} 实时查看file1文件的尾部追加内容 | 看log</p>
+</li>
+<li><p>查找文件的部分内容<br>grep hello {file} 在file文件中查找含有hello关键字的行<br>grep ^hello {file} 在file文件中查找所有以hello开头的行<br>grep [0-9] {file} 在file文件中查找所有含有数字的行<br>grep -v hello {file} 在file文件中查找所有不含hello关键字的行<br>grep -v ^# {file} 在file文件中查找所有不以#开头的行</p>
+</li>
+<li><p>截取文本<br>cut</p>
+</li>
+<li><p>统计文件的行数，单词数，字节数<br>wc {file} 统计file文件的行数，单词数，字节数<br>wc -l {file} 统计file文件的行数<br>wc -c {file} 统计file文件的字节数<br>wc -w {file} 统计file文件的单词数</p>
+</li>
+<li><p>去重（相邻的重复行才叫重复）<br>uniq {file}去除file文件中的相邻重复文本（不相邻行的重复，不去除）<br>uniq -c {file} 去除file文件的相邻重复文本，并显示相邻重复行的个数<br>uniq -u {file} 只显示file文件中不重复的行<br>uniq -d {file} 只显示file文件中重复的行，不重复的不显示</p>
+</li>
+<li><p>将文件内容进行排序<br>sort</p>
+</li>
+<li><p>文本和数据进行处理的编程语言<br>awk</p>
+</li>
+<li><p>功能强大的流式文本编辑器<br>sed</p>
+</li>
+</ul>
+<p><strong>Linux软件包管理</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rpm包和deb包是两种Linux系统下最常见的安装包格式，在安装一些软件或服务的时候免不了要和它们打交道</span><br><span class="line">rpm包主要应用在RedHat系列包括 Fedora,Centos等发行版的Linux系统上，</span><br><span class="line">deb包主要应用于Debian系列包括现在比较流行的Ubuntu等发行版上。</span><br><span class="line">yum软件包管理程序是基于rpm的，apt-get软件包管理程序是基于deb的</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>yum包（Fedora,RedHat,Centos）<br>查找与显示<br>yum list 显示yum服务器提供的所有rpm软件包<br>yum list installed 显示本地已安装的rpm软件包<br>yum deplist {name} 查看xxx程序的软件包依赖情况</p>
+</li>
+<li><p>安装rpm软件包<br>yum install {name} 从yum服务器中下载并安装一个rpm包<br>yum localinstall {name.rpm} 安装本地提供的rpm包，并使用自己的软件仓库解决依赖关系</p>
+</li>
+<li><p>更新已安装的rpm软件包<br>yum update 全部更新, 不删除旧依赖包<br>yum update {name} 更新指定rpm软件包，不删除旧依赖包<br>yum upgrade 全部更新，删除旧依赖包<br>yum upgrade {name} 更新指定rpm软件包，删除旧依赖包<br>yum check-update 检查可更新的程序<br>yum 的update与apt update不太一样，yum update 不建议随便使用</p>
+</li>
+<li><p>卸载已安装的rpm软件包<br>yum remove {name}</p>
+</li>
+<li><p>清理缓存<br>yum clean packages 清理缓存目录下的软件包<br>yum clean headers 清理缓存目录下的headers<br>yum clean oldheaders 清理缓存目录下的headers</p>
+</li>
+<li><p>apt包（Debian,Ubuntu）<br>查找与显示<br>apt-cache search {name} 搜索列表中含有关键字的软件包<br>apt list 展示apt服务器中可下载的软件包列表<br>dpkg -l 展示本地已经安装好的deb包，基于deb包的命令，非apt自带</p>
+</li>
+<li><p>更新apt软件包列表<br>apt-get update 获取最新列表</p>
+</li>
+<li><p>安装一个软件包（deb包）<br>apt-get install {name} 从服务器安装/更新一个 deb 包<br>apt-cdrom install {name} 从光盘安装/更新一个 deb 包</p>
+</li>
+<li><p>卸载一个已安装的deb包<br>apt-get remove {name}保留配置文件<br>apt-get -purge remove {name}彻底删除，删除配置文件</p>
+</li>
+<li><p>升级所有已安装的软件<br>apt-get upgrade</p>
+</li>
+<li><p>从下载的软件包中清理缓存，类似清理安装包<br>apt-get clean</p>
+</li>
+<li><p>确认依赖的软件仓库正确<br>apt-get check</p>
+</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2021/10/10/Linux/Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">https://kunstudy.com/2021/10/10/Linux/Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/10/08/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%92%8C%E9%94%81%E4%BC%98%E5%8C%96/">synchronized实现原理和锁优化</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>
