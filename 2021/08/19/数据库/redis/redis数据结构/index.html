@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>redis数据结构 | kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">redis数据结构</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 19, 2021&nbsp;&nbsp;9:23:32</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="redis数据结构："><a href="#redis数据结构：" class="headerlink" title="redis数据结构："></a>redis数据结构：</h3><p>[redis命令参考](<a target="_blank" rel="noopener" href="http://doc.redisfans.com/">Redis 命令参考 — Redis 命令参考 (redisfans.com)</a>)</p>
+<p>redis的数据结构类型，指的是redis值得value的类型</p>
+<img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.4wbznm21hog0.png" alt="image" style="zoom:50%;" />
+
+<ul>
+<li>String类型是redis最常用的数据结构类型，存储的值为字符串。</li>
+</ul>
+<p>应用场景：</p>
+<ol>
+<li>做与<strong>统计有关</strong>的业务，如新浪微博（微信朋友圈）中的点赞功能。<br>相关命令：incr、incrby、decr、decrby。</li>
+<li><strong>解决多线程的线程安全问题。</strong><br>redis的key是单线程模式，这就意味一瞬间只有一个线程能够持有这个key，所以可以使用redis解决部分涉及线程安全的业务，比如说<strong>抢购、秒杀</strong>。</li>
+<li>缓存，计数器，分布式锁</li>
+</ol>
+<ul>
+<li>List类型</li>
+</ul>
+<p>基于Linked List实现</p>
+<p>元素是字符串类型</p>
+<p>可以重复出现</p>
+<p>应用场景：</p>
+<ol>
+<li><p>处理顺序类业务，评论列表等</p>
+</li>
+<li><p>聊天室</p>
+</li>
+<li><p>关注人时间轴</p>
+</li>
+</ol>
+<ul>
+<li>Hash类型（散列）</li>
+</ul>
+<p>hash内容是键值对</p>
+<p>key，field和value都是字符串类型</p>
+<p>一个hash最多包含2^32-1键值对</p>
+<p>应用场景：</p>
+<ol>
+<li>用户信息</li>
+<li>Hash表</li>
+</ol>
+<ul>
+<li>Set类型（集合）</li>
+</ul>
+<p>无序的，无重复的</p>
+<p>元素类型是字符串</p>
+<p>最多包含2^32-1个元素</p>
+<p>应用场景：</p>
+<ol>
+<li>共同关注</li>
+</ol>
+<p>实现：求两个Set集合的交集</p>
+<ol start="2">
+<li>👍，👎</li>
+</ol>
+<ul>
+<li>ZSet类型</li>
+</ul>
+<p>类似Set集合</p>
+<p>有序的，无重复的</p>
+<p>元素是字符串类型</p>
+<p>每个元素都有一个关联的浮点数分值，并按照分值的从小到大的顺序排列集合中的元素。分值可以相同。</p>
+<p>应用场景：</p>
+<p>适合做有序且唯一的业务操作：排行榜。</p>
+<ol>
+<li>热搜排行榜</li>
+<li>点击量排行榜</li>
+</ol>
+<h3 id="redis单线程为什么快"><a href="#redis单线程为什么快" class="headerlink" title="redis单线程为什么快"></a>redis单线程为什么快</h3><ul>
+<li><strong>纯内存操作</strong></li>
+<li><strong>单线程</strong></li>
+<li><strong>高效的数据结构</strong></li>
+<li><strong>合理的数据编码</strong></li>
+<li><strong>优化</strong></li>
+</ul>
+<p>在内存中操作避免了IO的交互，单线程环境下避免了上下文切换问题。</p>
+<p>上面两个能提高redis的速度是显而易见的，重点来分析一下redis底层实现的数据结构。</p>
+<ol>
+<li>SDS</li>
+</ol>
+<p>此数据结构用来存储redis的字符串</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> len;<span class="comment">//记录buf已使用的空间长度</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">free</span>;<span class="comment">//空闲空间的长度</span></span><br><span class="line">    <span class="keyword">char</span> buf[];<span class="comment">//存储的实际内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此数据结构的优点：</p>
+<ol>
+<li>获取字符串长度的时间复杂度是O(1)</li>
+<li>避免了缓冲区溢出的问题</li>
+<li>减少字符串修改带来的内存重新分配的次数</li>
+</ol>
+<p>主要体现在：空间预分配和惰性空间释放</p>
+<p>空间预分配：当 SDS 的 API 对一个 SDS 修改后，并且对 SDS 空间扩充时，程序不仅会为 SDS 分配所需要的必须空间，还会分配额外的未使用空间。</p>
+<p>惰性空间释放：当对 SDS 进行缩短操作时，程序并不会回收多余的内存空间，而是使用 free 字段将这些字节数量记录下来不释放，后面如果需要 append 操作，则直接使用 free 中未使用的空间，减少了内存的分配。</p>
+<ol start="2">
+<li>字典</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dict</span>&#123;</span></span><br><span class="line">    dictType *type;</span><br><span class="line">    <span class="keyword">void</span> *privdata;</span><br><span class="line">    dictht ht[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> trehashidx;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span>&#123;</span></span><br><span class="line">    <span class="comment">//哈希表数组</span></span><br><span class="line">    dectEntrt **table;</span><br><span class="line">    <span class="comment">//哈希表大小</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> size;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask;</span><br><span class="line">    <span class="comment">//哈希表已有节点数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> used;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重要的两个字段是 dictht 和 trehashidx，这两个字段与 rehash 有关，下面重点介绍 rehash。</p>
+<p><strong>Rehash</strong></p>
+<p>由上段代码，我们可知 dict 中存储了一个 dictht 的数组，长度为 2，表明这个数据结构中实际存储着两个哈希表 ht[0] 和 ht[1]，为什么要存储两张 hash 表呢？</p>
+<p>当然是为了 Rehash，Rehash 的过程如下：</p>
+<ul>
+<li>为 ht[1] 分配空间。如果是扩容操作，ht[1] 的大小为第一个大于等于 ht[0].used*2 的 2^n；如果是缩容操作，ht[1] 的大小为第一个大于等于 ht[0].used 的 2^n。</li>
+<li>将 ht[0] 中的键值 Rehash 到 ht[1] 中。</li>
+<li>当 ht[0] 全部迁移到 ht[1] 中后，释放 ht[0]，将 ht[1] 置为 ht[0]，并为 ht[1] 创建一张新表，为下次 Rehash 做准备。</li>
+</ul>
+<p><strong>渐进式 Rehash</strong></p>
+<p>由于 Redis 的 Rehash 操作是将 ht[0] 中的键值全部迁移到 ht[1]，如果数据量小，则迁移过程很快。但如果数据量很大，一个 Hash 表中存储了几万甚至几百万几千万的键值时，迁移过程很慢并会影响到其他用户的使用。</p>
+<p>为了避免 Rehash 对服务器性能造成影响，Redis 采用了一种渐进式 Rehash 的策略，分多次、渐进的将 ht[0] 中的数据迁移到 ht[1] 中。</p>
+<p>前一过程如下：</p>
+<ul>
+<li>为 ht[1] 分配空间，让字典同时拥有 ht[0] 和 ht[1] 两个哈希表。</li>
+<li>字典中维护一个 rehashidx，并将它置为 0，表示 Rehash 开始。</li>
+<li>在 Rehash 期间，每次对字典操作时，程序还顺便将 ht[0] 在 rehashidx 索引上的所有键值对 rehash 到 ht[1] 中，当 Rehash 完成后，将 rehashidx 属性+1。当全部 rehash 完成后，将 rehashidx 置为 -1，表示 rehash 完成。</li>
+</ul>
+<p>注意，由于维护了两张 Hash 表，所以在 Rehash 的过程中内存会增长。另外，在 Rehash 过程中，字典会同时使用 ht[0] 和 ht[1]。</p>
+<p>所以在删除、查找、更新时会在两张表中操作，在查询时会现在第一张表中查询，如果第一张表中没有，则会在第二张表中查询。但新增时一律会在 ht[1] 中进行，确保 ht[0] 中的数据只会减少不会增加。</p>
+<ol start="3">
+<li>跳跃表</li>
+</ol>
+<p>Zset 是一个有序的链表结构，其底层的数据结构是跳跃表 skiplist，其结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> &#123;</span></span><br><span class="line">    <span class="comment">//成员对象</span></span><br><span class="line">   robj *obj;</span><br><span class="line">    <span class="comment">//分值</span></span><br><span class="line">   <span class="keyword">double</span> score;</span><br><span class="line">    <span class="comment">//后退指针</span></span><br><span class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">backward</span>;</span></span><br><span class="line">    <span class="comment">//层</span></span><br><span class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistLevel</span> &#123;</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">forward</span>;</span><span class="comment">//前进指针</span></span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span> span;<span class="comment">//跨度</span></span><br><span class="line">   &#125; level[];</span><br><span class="line"> &#125; zskiplistNode;</span><br><span class="line"> <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">zskiplist</span> &#123;</span></span><br><span class="line">    <span class="comment">//表头节点和表尾节点</span></span><br><span class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">zskiplistNode</span> *<span class="title">header</span>, *<span class="title">tail</span>;</span></span><br><span class="line">    <span class="comment">//表中节点的的数量</span></span><br><span class="line">   <span class="keyword">unsigned</span> <span class="keyword">long</span> length;</span><br><span class="line">    <span class="comment">//表中层数最大的节点层数</span></span><br><span class="line">   <span class="keyword">int</span> level;</span><br><span class="line"> &#125; zskiplist;</span><br></pre></td></tr></table></figure>
+
+<p>跳跃表的插入步骤：</p>
+<ol>
+<li>新节点和各层节点逐一比较，确定原链表的插入位置</li>
+<li>把索引插入到原链表</li>
+<li>利用随机的方式决定新节点是否上升到上一级索引。</li>
+</ol>
+<p>时间复杂度O（logN），空间复杂度O（N）。典型的以空间换时间。</p>
+<p>跳跃表删除节点的步骤：</p>
+<ol>
+<li>自上而下，查找第一次出现节点的索引，并逐层找到每一层对应的节点。</li>
+<li>删除每一层查找到的节点，如果该层只剩下1个节点，删除整个一层（原链表除外）。</li>
+</ol>
+<p>删除操作的时间复杂度为O（logN）。</p>
+<p>跳跃表的原理可以参考靠这一篇文章：[什么是跳跃表?](<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dc252b5efca6">漫画算法：什么是跳跃表？ - 简书 (jianshu.com)</a>)</p>
+<p>编码转化也是影响redis性能的一个重要因素。</p>
+<p>过期数据的删除对redis性能的影响：</p>
+<p>三种删除策略：</p>
+<ul>
+<li>定时删除</li>
+<li>惰性删除</li>
+<li>定期删除</li>
+</ul>
+<h3 id="热key产生原因和后果以及怎么解决"><a href="#热key产生原因和后果以及怎么解决" class="headerlink" title="热key产生原因和后果以及怎么解决"></a>热key产生原因和后果以及怎么解决</h3><p>热key问题就是瞬间有几十万的请求去访问redis上某个固定的key，从而压垮缓存服务的情况。<br>其实生活中也是有不少这样的例子。比如XX明星结婚。那么关于XX明星的Key就会瞬间增大，就会出现热数据问题。从而导致这台redis的服务器宕机。</p>
+<p>如何解决？</p>
+<ol>
+<li>利用二级缓存</li>
+<li>备份热key（做集群部署）</li>
+</ol>
+<h3 id="redis主从，sentinel和cluster区别和各自适用场景"><a href="#redis主从，sentinel和cluster区别和各自适用场景" class="headerlink" title="redis主从，sentinel和cluster区别和各自适用场景"></a>redis主从，sentinel和cluster区别和各自适用场景</h3><ul>
+<li>主从</li>
+</ul>
+<p>主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master)，后者称为从节点(slave),数据的复制是单向的，只能由主节点到从节点。</p>
+<p>默认情况下，每台Redis服务器都是主节点；且一个主节点可以有多个从节点(或没有从节点)，但一个从节点只能有一个主节点。</p>
+<p><strong>主从复制的作用</strong></p>
+<ul>
+<li>数据冗余：主从复制实现了数据的热备份，是持久化之外的一种数据冗余方式。</li>
+<li>故障恢复：当主节点出现问题时，可以由从节点提供服务，实现快速的故障恢复；实际上是一种服务的冗余。</li>
+<li>负载均衡：在主从复制的基础上，配合读写分离，可以由主节点提供写服务，由从节点提供读服务（即写Redis数据时应用连接主节点，读Redis数据时应用连接从节点），分担服务器负载；尤其是在写少读多的场景下，通过多个从节点分担读负载，可以大大提高Redis服务器的并发量。</li>
+<li>读写分离：可以用于实现读写分离，主库写、从库读，读写分离不仅可以提高服务器的负载能力，同时可根据需求的变化，改变从库的数量；</li>
+<li>高可用基石：除了上述作用以外，主从复制还是哨兵和集群能够实施的基础，因此说主从复制是Redis高可用的基础。</li>
+</ul>
+<p><strong>主从复制原理</strong></p>
+<p>主从复制过程大体可以分为3个阶段：连接建立阶段（即准备阶段）、数据同步阶段、命令传播阶段。</p>
+<ol>
+<li>保存主节点信息</li>
+<li>主从建立socket连接</li>
+<li>发送ping命令</li>
+<li>权限验证</li>
+<li>同步数据集</li>
+<li>命令持续复制</li>
+</ol>
+<ul>
+<li>哨兵（<strong>Sentinel</strong>）</li>
+</ul>
+<p><strong>顾名思义Sentinel充当了Redis主从实例的守卫者，是构成Redis高可用的一个重要组成部分，其主要作用如下：</strong></p>
+<ul>
+<li>集群监控，负责监控redis master和slave进程是否正常工作</li>
+<li>消息通知，如果某个redis实例有故障，那么哨兵负责发送消息作为报警通知给管理员</li>
+<li>故障转移，如果master node挂掉了，会自动转移到slave node上</li>
+<li>配置中心，如果故障转移发生了，通知client客户端新的master地址</li>
+</ul>
+<p><strong>Redis sentinel本身也是分布式的，作为一个哨兵集群去运行，互相协同工作。</strong></p>
+<p>由于哨兵本身也是可能失效的，所以一个哨兵不能保证Redis服务的高可用，为了保证Redis服务其中一个节点故障的，其他节点仍能够继续推选新的节点来代替当前故障节点继续对外提供服务，Redis通过仲裁算法来推选新的节点来代替当前故障节点。所以哨兵至少需要三个实例来完成高可用，才是一个健壮的哨兵系统</p>
+<ul>
+<li>哨兵至少需要3个实例，来保证自己的健壮性</li>
+<li>哨兵 + redis主从的部署架构，是不会保证数据零丢失的，只能保证redis集群的高可用性</li>
+<li>对于哨兵 + redis主从这种复杂的部署架构，尽量在测试环境和生产环境，都进行充足的测试和演练</li>
+</ul>
+<p><strong>集群</strong>（<strong>cluster</strong>）</p>
+<p>​        Redis Cluster是Redis的分布式解决方案，在Redis 3.0版本正式推出的，有效解决了Redis分布式方面的需求。当遇到单机内存、并发、流量等瓶颈时，可以采用Cluster架构达到负载均衡的目的。分布式集群首要解决把整个数据集按照分区规则映射到多个节点的问题，即把数据集划分到多个节点上，每个节点负责整个数据的一个子集。Redis Cluster采用哈希分区规则中的虚拟槽分区。虚拟槽分区巧妙地使用了哈希空间，使用分散度良好的哈希函数把所有的数据映射到一个固定范围内的整数集合，整数定义为槽（slot）。Redis Cluster槽的范围是0 ～ 16383。槽是集群内数据管理和迁移的基本单位。采用大范围的槽的主要目的是为了方便数据的拆分和集群的扩展，每个节点负责一定数量的槽。Redis Cluster采用虚拟槽分区，所有的键根据哈希函数映射到0 ～ 16383，计算公式：slot = CRC16(key)&amp;16383。每一个实节点负责维护一部分槽以及槽所映射的键值数据。下图展现一个五个节点构成的集群，每个节点平均大约负责3276个槽，以及通过计算公式映射到对应节点的对应槽的过程。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2021/08/19/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">https://kunstudy.com/2021/08/19/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/08/19/%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97/%E3%80%90%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%9702%E3%80%91/">重难点解析系列02</a>
+            
+            
+            <a class="next" rel="next" href="/2021/08/18/%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97/%E3%80%90%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%9701%E3%80%91/">重难点解析系列01</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>

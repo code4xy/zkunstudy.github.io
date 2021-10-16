@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>重难点解析系列01 | kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">重难点解析系列01</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 18, 2021&nbsp;&nbsp;9:23:32</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97/">重难点解析系列</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="【重难点解析系列01】"><a href="#【重难点解析系列01】" class="headerlink" title="【重难点解析系列01】"></a>【重难点解析系列01】</h2><h3 id="关于ThreadLocal："><a href="#关于ThreadLocal：" class="headerlink" title="关于ThreadLocal："></a><strong>关于ThreadLocal：</strong></h3><p>作用：threadlocal是一个线程内部的存储类，可以在指定线程内存储数据，数据存储以后，只有指定线程可以得到存储数据.</p>
+<p>ThreadLocal类很简单，只有4个方法:</p>
+<ul>
+<li><p>void set(Object value):设置当前线程的线程局部变量的值。</p>
+</li>
+<li><p>public Object get():该方法返回当前线程所对应的线程局部变量。</p>
+</li>
+<li><p>public void remove():将当前线程局部变量的值删除，目的是为了减少内存的占用，该方法是JDK 5.0新增的方法。需要指出的是，当线程结束后，对应该线程的局部变量将自动被垃圾回收，所以显式调用该方法清除线程的局部变量并不是必须的操作，但它可以加快内存回收的速度。</p>
+</li>
+<li><p>protected Object initialValue():返回该线程局部变量的初始值，该方法是一个protected的方法，显然是为了让子类覆盖而设计的。这个方法是一个延迟调用方法，在线程第1次调用get()或set(Object)时才执行，并且仅执行1次。ThreadLocal中的缺省实现直接返回一个null。</p>
+</li>
+</ul>
+<p>使用ThreadLocal来解决并发写问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo01</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> ThreadLocal&lt;Integer&gt; threadLocal = <span class="keyword">new</span> ThreadLocal&lt;Integer&gt;();</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> t1a = <span class="number">0</span> ;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> t2a = <span class="number">0</span> ;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">0</span> ;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                threadLocal.set(<span class="number">0</span>);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++) &#123;</span><br><span class="line">                    Integer integer = threadLocal.get();</span><br><span class="line">                    integer++;</span><br><span class="line">                    threadLocal.set(integer);</span><br><span class="line">                &#125;</span><br><span class="line">                t1a = threadLocal.get();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                threadLocal.set(<span class="number">0</span>);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; i++) &#123;</span><br><span class="line">                    Integer integer = threadLocal.get();</span><br><span class="line">                    integer++;</span><br><span class="line">                    threadLocal.set(integer);</span><br><span class="line">                &#125;</span><br><span class="line">                t2a = threadLocal.get();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t1.join();</span><br><span class="line">        t2.join();</span><br><span class="line">        <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(end - start);</span><br><span class="line">        System.out.println(t1a + t2a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.61jcmgjgth80.png" alt="image" style="zoom: 80%;" />
+
+<p>经过测试，比使用synchronized锁的效率还高。</p>
+<p><strong>源码分析：</strong></p>
+<p>怎么保证存储的数据只能当前线程可见，其他线程不可见，查看Thread类源码：</p>
+<img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.6hos3o1nfjw0.png" alt="image" style="zoom: 50%;" />
+
+<p>其中有两个成员变量，threadLocals和inheritableThreadLocals，都是ThreadLocal.ThreadLocalMap（Map数据结构）类型的变量，默认为null，只有当线程第一次调用ThreadLocal的set或者get方法的时候才会创建他们。</p>
+<ul>
+<li>set方法源码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获取当前线程（调用者线程）</span></span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    <span class="comment">//以当前线程作为key值，去查找对应的线程变量，找到对应的map</span></span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    <span class="comment">//如果map不为null，就直接添加本地变量，key为当前定义的ThreadLocal变量的this引用，值为添加的本地变量值</span></span><br><span class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>)</span><br><span class="line">        map.set(<span class="keyword">this</span>, value);</span><br><span class="line">    <span class="comment">//如果map为null，说明首次添加，需要首先创建出对应的map</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        createMap(t, value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ThreadLocalMap <span class="title">getMap</span><span class="params">(Thread t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> t.threadLocals; <span class="comment">//获取线程自己的变量threadLocals，并绑定到当前调用线程的成员变量threadLocals上</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createMap</span><span class="params">(Thread t, T firstValue)</span> </span>&#123;</span><br><span class="line">     t.threadLocals = <span class="keyword">new</span> ThreadLocalMap(<span class="keyword">this</span>, firstValue);</span><br><span class="line"> &#125;<span class="comment">//　createMap方法不仅创建了threadLocals，同时也将要添加的本地变量值添加到了threadLocals中。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>get方法源码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获取当前线程</span></span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    <span class="comment">//获取当前线程的threadLocals变量</span></span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    <span class="comment">//如果threadLocals变量不为null，就可以在map中查找到本地变量的值</span></span><br><span class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">            T result = (T)e.value;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//执行到此处，threadLocals为null，调用该更改初始化当前线程的threadLocals变量</span></span><br><span class="line">    <span class="keyword">return</span> setInitialValue();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> T <span class="title">setInitialValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//protected T initialValue() &#123;return null;&#125;</span></span><br><span class="line">    T value = initialValue();</span><br><span class="line">    <span class="comment">//获取当前线程</span></span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    <span class="comment">//以当前线程作为key值，去查找对应的线程变量，找到对应的map</span></span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    <span class="comment">//如果map不为null，就直接添加本地变量，key为当前线程，值为添加的本地变量值</span></span><br><span class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>)</span><br><span class="line">        map.set(<span class="keyword">this</span>, value);</span><br><span class="line">    <span class="comment">//如果map为null，说明首次添加，需要首先创建出对应的map</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        createMap(t, value);</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>remove方法的实现</p>
+<p>remove方法判断该当前线程对应的threadLocals变量是否为null，不为null就直接删除当前线程中指定的threadLocals变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获取当前线程绑定的threadLocals</span></span><br><span class="line">     ThreadLocalMap m = getMap(Thread.currentThread());</span><br><span class="line">     <span class="comment">//如果map不为null，就移除当前线程中指定ThreadLocal实例的本地变量</span></span><br><span class="line">     <span class="keyword">if</span> (m != <span class="keyword">null</span>)</span><br><span class="line">         m.remove(<span class="keyword">this</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示：每个线程内部有一个名为threadLocals的成员变量，该变量的类型为ThreadLocal.ThreadLocalMap类型（类似于一个HashMap），其中的key为当前定义的ThreadLocal变量的this引用，value为我们使用set方法设置的值。每个线程的本地变量存放在自己的本地内存变量threadLocals中，如果当前线程一直不消亡，那么这些本地变量就会一直存在（所以可能会导致内存溢出），因此使用完毕需要将其remove掉。</p>
+</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.2ztnwmibe4c0.png" alt="image" style="zoom:50%;" />
+
+<h3 id="父子线程怎么共享数据："><a href="#父子线程怎么共享数据：" class="headerlink" title="父子线程怎么共享数据："></a><strong>父子线程怎么共享数据：</strong></h3><p>Java语言的主方法为main方法，相应的主线程为mian方法所在的线程，当我们在main方法里面创建线程时，相对mian线程来说就是子线程，此时父子线程共享数据就要利用main方法所在类的成员变量来实现。</p>
+<p>简单的例子如下：（这显然不是线程安全的）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">0</span> ;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            a++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">                a++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子就表明，父子线程可以共享的数据在父线程所在类的成员变量上。</p>
+<p>以此类推，在Thread线程中再创建Thread线程，此时子线程和父线程能共享的数据肯定也在父线程的成员变量上。</p>
+<p>再Thread类中有这样的成员变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ThreadLocal.ThreadLocalMap inheritableThreadLocals = <span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
+
+<p>inheritableThreadLocals正是供我们使用变量，利用它可以实现父子线程共享数据。</p>
+<h3 id="InheritableThreadLocals"><a href="#InheritableThreadLocals" class="headerlink" title="InheritableThreadLocals"></a><strong>InheritableThreadLocals</strong></h3><p>inheritableThreadLocals并不能直接使用，而是通过类InheritableThreadLocals来使用的，下面是该类的源码，主要是覆盖了ThreadLocal的以下几个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InheritableThreadLocal</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">ThreadLocal</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> T <span class="title">childValue</span><span class="params">(T parentValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parentValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ThreadLocalMap <span class="title">getMap</span><span class="params">(Thread t)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> t.inheritableThreadLocals;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createMap</span><span class="params">(Thread t, T firstValue)</span> </span>&#123;</span><br><span class="line">        t.inheritableThreadLocals = <span class="keyword">new</span> ThreadLocalMap(<span class="keyword">this</span>, firstValue);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用时如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">   InheritableThreadLocal&lt;String&gt; inheritableThreadLocal = <span class="keyword">new</span> InheritableThreadLocal&lt;&gt;();</span><br><span class="line">   <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">       inheritableThreadLocal.get();</span><br><span class="line">   &#125;).start();</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+
+<p>原理：</p>
+<p>InheritableThreadLocal类继承了ThreadLocal类，并重写了childValue、getMap、createMap三个方法。其中createMap方法在被调用（当前线程调用set方法时得到的map为null的时候需要调用该方法）的时候，创建的是inheritableThreadLocal而不是threadLocals。同理，getMap方法在当前调用者线程调用get方法的时候返回的也不是threadLocals而是inheritableThreadLocal。</p>
+<p>InheritableThreadLocals类通过重写getMap和createMap两个方法将本地变量保存到了具体线程的inheritableThreadLocals变量中，当线程通过InheritableThreadLocals实例的set或者get方法设置变量的时候，就会创建当前线程的inheritableThreadLocals变量。而父线程创建子线程的时候，ThreadLocalMap中的构造函数会将父线程的inheritableThreadLocals中的变量复制一份到子线程的inheritableThreadLocals变量中。</p>
+<h3 id="Lock和synchronized的区别："><a href="#Lock和synchronized的区别：" class="headerlink" title="Lock和synchronized的区别："></a><strong>Lock和synchronized的区别：</strong></h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>synchronized</th>
+<th>Lock</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存在层次</td>
+<td>Java关键字，再jvm层面上</td>
+<td>是一个类</td>
+</tr>
+<tr>
+<td>锁的释放</td>
+<td>1.已经获取锁的线程执行完同步代码块，释放锁2.线程执行发生异常，jvm会让线程释放锁</td>
+<td>在finally中必须释放锁，不然容易造成死锁</td>
+</tr>
+<tr>
+<td>锁的获取</td>
+<td>A线程获取锁，B线程等待。如果A线程获取锁后阻塞，B线程会一直等待</td>
+<td>可以尝试获取锁，分情况而定</td>
+</tr>
+<tr>
+<td>锁的状态</td>
+<td>无法判断</td>
+<td>可以判断</td>
+</tr>
+<tr>
+<td>锁的类型</td>
+<td>可重入 不可中断 非公平</td>
+<td>可重入 可判断 可公平（非公平）</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>少量同步</td>
+<td>大量同步</td>
+</tr>
+</tbody></table>
+<p><strong>synchronized实现原理</strong></p>
+<p>Java中每个对象都可以作为锁，这是synchronized事先同步的基础：</p>
+<ul>
+<li>普通同步方法，锁的是当前实例对象</li>
+<li>静态同步方法，锁的是当前类的class对象</li>
+<li>同步代码块，锁的是括号里面的对象</li>
+</ul>
+<p>当一个线程访问同步代码块时，它首先是需要得到锁，当退出或者抛出异常时必须要释放锁，我们先看一段简单的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo05</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用反编译查看字节码分析synchronized的实现：</p>
+<img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.ose8dvys128.png" alt="image" style="zoom:50%;" />
+
+<p>从上面可以看出，同步代码块是使用monitorenter和monitorexit指令实现的，同步方法（在这看不出来需要看JVM底层实现）依靠的是方法修饰符上的ACC_SYNCHRONIZED实现。</p>
+<p><strong>同步代码块</strong>：monitorenter指令是在编译后插入到同步代码块的开始位置，monitorexit指令插入到同步代码块的结束位置，JVM需要保证每一个monitorenter都有一个monitorexit与之相对应。任何对象都有一个monitor与之相关联，当且一个monitor被持有之后，他将处于锁定状态。线程执行到monitorenter指令时，将会尝试获取对象所对应的monitor所有权，即尝试获取对象的锁。当一条线程进行执行的遇到monitorenter指令的时候，它会去尝试获得锁，如果获得锁那么锁计数+1（为什么会加一呢，因为它是一个<strong>可重入锁</strong>，所以需要用这个锁计数判断锁的情况），如果没有获得锁，那么阻塞。当它遇到monitorexit的时候，锁计数器-1，当计数器为0，那么就释放锁。</p>
+<p>上面有两个monitorexit：因为synchronized锁释放有两种机制，<strong>一种就是执行完释放</strong>；<strong>另外一种就是发送异常，虚拟机释放</strong>。第二个monitorexit就是发生异常时执行的流程</p>
+<p><strong>同步方法</strong>：synchronized方法则会被翻译成普通的方法调用和返回指令如:invokevirtual、areturn指令，在VM字节码层面并没有任何特别的指令来实现被synchronized修饰的方法，而是在Class文件的方法表中将该方法的access_flags字段中的synchronized标志位置1，表示该方法是同步方法并使用调用该方法的对象或该方法所属的Class在JVM的内部对象表示Klass做为锁对象。</p>
+<p><strong>Lock锁的实现原理：</strong></p>
+<p>Lock实现和synchronized不一样，后者是一种<strong>悲观锁</strong>，而Lock底层其实是<strong>CAS乐观锁</strong>的体现，底层主要靠volatile和CAS操作实现的。</p>
+<ul>
+<li>线程自旋和适应性自旋</li>
+</ul>
+<p>java线程其实是映射在内核之上的，线程的挂起和恢复会极大的影响开销。并且jdk官方人员发现，很多线程在等待锁的时候，在很短的一段时间就获得了锁，所以它们在线程等待的时候，并不需要把线程挂起，而是让他无目的的循环，一般设置10次。这样就避免了线程切换的开销，极大的提升了性能。</p>
+<p>　　而适应性自旋，是赋予了自旋一种学习能力，它并不固定自旋10次一下。他可以根据它前面线程的自旋情况，从而调整它的自旋，甚至是不经过自旋而直接挂起。</p>
+<ul>
+<li>锁消除：通过运行时JIT编译器的逃逸分析来消除一些没有在当前同步块以外被其他线程共享的数据的锁保护，通过逃逸分析也可以在线程本地Stack上进行对象空间的分配（同时还可以减少Heap上的垃圾收集开销）。</li>
+<li>锁粗化：也就是减少不必要的紧连在一起的unlock，lock操作，将多个连续的锁扩展成一个范围更大的锁。</li>
+<li>轻量级锁：这种锁实现的背后基于这样一种假设，即在真实的情况下我们程序中的大部分同步代码一般都处于无锁竞争状态（即单线程执行环境），在无锁竞争的情况下完全可以避免调用操作系统层面的重量级互斥锁，取而代之的是在monitorenter和monitorexit中只需要依靠一条CAS原子指令就可以完成锁的获取及释放。当存在锁竞争的情况下，执行CAS指令失败的线程将调用操作系统互斥锁进入到阻塞状态，当锁被释放的时候被唤醒。</li>
+<li>偏向锁：是为了在无锁竞争的情况下避免在锁获取过程中执行不必要的CAS原子指令，因为CAS原子指令虽然相对于重量级锁来说开销比较小但还是存在非常可观的本地延迟。</li>
+</ul>
+<p>实现Lock接口的基本思想：</p>
+<ol>
+<li>锁状态的表示，该变量声明为voaltile类型（为了解决多核处理器下多线程缓存不一致的问题）。</li>
+<li>队列，队列中的节点表示未能获取锁而阻塞的线程。</li>
+</ol>
+<p><strong>线程获取锁的大致过程：</strong></p>
+<ol>
+<li><p>读取表示锁状态的变量</p>
+</li>
+<li><p>如果表示状态的变量值为0，那么当前线程尝试将变量值设置为1（CAS操作完成），当多个线程同时将表示状态的变量由0设置为1时，仅能成功一个，其他线程将失败：</p>
+<p>2.1 若成功，表示获取了锁</p>
+<p>​     2.1.1 如果该线程（或者说节点）已位于在队列中，则将其出列（并将下一个节点则变成了队列的头节点）</p>
+<p>​    2.1.2 <strong>如果该线程未入列，则不用对队列进行维护</strong></p>
+<p>​    然后当前线程从lock方法中返回，对共享资源进行访问</p>
+<p>2.2 若失败，则当前线程将自身放入等待（锁的）队列中并阻塞自身，此时线程一直被阻塞在lock方法中，没有从该方法中返回（被唤醒后仍然在lock方法中，并从下一条语句继续执行，这里又会回到第1步重新开始）。</p>
+</li>
+<li><p>如果表示状态的变量的值为1，那么将当前线程放入等待队列中，然后将自身阻塞（被唤醒后仍然在lock方法中，并从下一条语句继续执行，这里又会回到第1步重新开始）</p>
+</li>
+</ol>
+<p>唤醒并不表示线程能立刻运行，而是表示线程处于就绪状态，仅仅是可以运行而已</p>
+<p><strong>线程释放锁的大致过程</strong></p>
+<p>​    1. 释放锁的线程将状态变量的值从1设置为0，并唤醒等待（锁）队列中的<strong>队首节点</strong>，释放锁的线程从就从unlock方法中返回，继续执行线程后面的代码</p>
+<p>​    2. 被唤醒的线程（队列中的队首节点）和可能和未进入队列并且准备获取的线程竞争获取锁，重复获取锁的过程</p>
+<p>​    注意：可能有多个线程同时竞争去获取锁，但是一次只能有一个线程去释放锁，队列中的节点都需要它的前一个节点将其唤醒，例如有队列A&lt;-B-&lt;C ，即由A释放锁时唤醒B，B释放锁时唤醒C</p>
+<p><strong>公平锁和非公平锁</strong></p>
+<p>​     锁可以分为公平锁和不公平锁，重入锁和非重入锁,以上过程实际上是非公平锁的获取和释放过程。</p>
+<p>公平锁严格按照先来后到的顺去获取锁，而非公平锁允许插队获取锁。</p>
+<p>​     公平锁获取锁的过程上有些不同，在使用公平锁时，某线程想要获取锁，不仅需要判断当前表示状态的变量的值是否为0，还要判断队列里是否还有其他线程，若队列中还有线程则说明当前线程需要排队，进行入列操作，并将自身阻塞；若队列为空，才能尝试去获取锁。而对于非公平锁，当表示状态的变量的值是为0，就可以尝试获取锁，不必理会队列是否为空，这样就实现了插队获取锁的特点。通常来说非公平锁的吞吐率比公平锁要高，我们一般常用非公平锁。</p>
+<p>​      这里需要解释一点，什么情况下才会出现，表示锁的状态的变量的值是为0而且队列中仍有其它线程等待获取锁的情况。</p>
+<p>​      假设有三个线程A、B、C。A线程为正在运行的线程并持有锁，队列中有一个C线程，位于队首。现在A线程要释放锁，具体执行的过程操作可分为两步：</p>
+<p>​      1. 将表示锁状态的变量值由1变为0，</p>
+<p>​      2. C线程被唤醒，这里要明确两点：</p>
+<p>​       <strong>（1）</strong>C线程被唤醒并不代表C线程开始执行，C线程此时是处于就绪状态，要等待操作系统的调度</p>
+<p>​       <strong>（2）</strong>C线程目前还并未出列，C线程要进入运行状态，并且通过竞争获取到锁以后才会出列。</p>
+<p>​      如果C线程此时还没有进入运行态，同时<strong>未在队列中</strong>的B线程进行获取锁的操作，B就会发现虽然当前没有线程持有锁，但是队列不为空（C线程仍然位于队列中），要满足先来后到的特点（B在C之后执行获取锁的操作），B线程就不能去尝试获取锁，而是进行入列操作。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2021/08/18/%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97/%E3%80%90%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%9701%E3%80%91/">https://kunstudy.com/2021/08/18/%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97/%E3%80%90%E9%87%8D%E9%9A%BE%E7%82%B9%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%9701%E3%80%91/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/08/19/%E6%95%B0%E6%8D%AE%E5%BA%93/redis/redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">redis数据结构</a>
+            
+            
+            <a class="next" rel="next" href="/2021/08/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">工厂模式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>
