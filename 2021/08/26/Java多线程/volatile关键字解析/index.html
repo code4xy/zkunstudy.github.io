@@ -180,6 +180,22 @@
 <p>　　在早期的CPU当中，是通过在总线上加LOCK#锁的形式来解决缓存不一致的问题。因为CPU和其他部件进行通信都是通过总线来进行的，如果对总线加LOCK#锁的话，也就是说阻塞了其他CPU对其他部件访问（如内存），从而使得只能有一个CPU能使用这个变量的内存。比如上面例子中 如果一个线程在执行 i = i +1，如果在执行这段代码的过程中，在总线上发出了LCOK#锁的信号，那么只有等待这段代码完全执行完毕之后，其他CPU才能从变量i所在的内存读取变量，然后进行相应的操作。这样就解决了缓存不一致的问题。</p>
 <p>　　但是上面的方式会有一个问题，由于在锁住总线期间，其他CPU无法访问内存，导致效率低下。</p>
 <p>　　所以就出现了缓存一致性协议。最出名的就是Intel 的MESI协议，MESI协议保证了每个缓存中使用的共享变量的副本是一致的。它核心的思想是：当CPU写数据时，如果发现操作的变量是共享变量，即在其他CPU中也存在该变量的副本，会发出信号通知其他CPU将该变量的缓存行置为无效状态，因此当其他CPU需要读取这个变量时，发现自己缓存中缓存该变量的缓存行是无效的，那么它就会从内存重新读取。</p>
+<p><code>volatile</code>是通过编译器在生成字节码时，在指令序列中添加“<strong>内存屏障</strong>”来禁止指令重排序的。</p>
+<p>硬件层面的“<strong>内存屏障</strong>”：</p>
+<ul>
+<li><strong>sfence</strong>：即写屏障(Store Barrier)，在写指令之后插入写屏障，能让写入缓存的最新数据写回到主内存，以保证写入的数据立刻对其他线程可见</li>
+<li><strong>lfence</strong>：即读屏障(Load Barrier)，在读指令前插入读屏障，可以让高速缓存中的数据失效，重新从主内存加载数据，以保证读取的是最新的数据。</li>
+<li><strong>mfence</strong>：即全能屏障(modify/mix Barrier )，兼具sfence和lfence的功能</li>
+<li><strong>lock 前缀</strong>：lock不是内存屏障，而是一种锁。执行时会锁住内存子系统来确保执行顺序，甚至跨多个CPU。</li>
+</ul>
+<p>JMM层面的“<strong>内存屏障</strong>”：</p>
+<ul>
+<li><strong>LoadLoad屏障</strong>： 对于这样的语句Load1; LoadLoad; Load2，在Load2及后续读取操作要读取的数据被访问前，保证Load1要读取的数据被读取完毕。</li>
+<li><strong>StoreStore屏障</strong>：对于这样的语句Store1; StoreStore; Store2，在Store2及后续写入操作执行前，保证Store1的写入操作对其它处理器可见。</li>
+<li><strong>LoadStore屏障</strong>：对于这样的语句Load1; LoadStore; Store2，在Store2及后续写入操作被刷出前，保证Load1要读取的数据被读取完毕。</li>
+<li><strong>StoreLoad屏障</strong>： 对于这样的语句Store1; StoreLoad; Load2，在Load2及后续所有读取操作执行前，保证Store1的写入对所有处理器可见。</li>
+</ul>
+<p>JVM的实现会在volatile读写前后均加上内存屏障，在一定程度上保证有序性。</p>
 <p>二.并发编程中的三个概念</p>
 <p>在并发编程中，我们通常会遇到以下三个问题：原子性问题，可见性问题，有序性问题。我们先看具体看一下这三个概念：</p>
 <p><strong>1.原子性</strong></p>
