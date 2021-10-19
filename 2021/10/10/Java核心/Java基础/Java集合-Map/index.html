@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>Java集合-Map | kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Java集合-Map</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十月 10, 2021&nbsp;&nbsp;11:29:06</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><strong>Set集合</strong></p>
+<p>collection的子接口之一，Set集合中的方法和List很类似，适合迁移学习。</p>
+<p>特点：元素的唯一性，不能含有重复元素。</p>
+<p><strong>一. HashSet</strong></p>
+<hr>
+<ol>
+<li><p>构造方法：HashSet()</p>
+<p>构造一个新的空 set，其底层 HashMap 实例的默认初始容量是 16，加载因子是 0.75。（当存储第13个元素时，则扩容）</p>
+</li>
+<li><p>特点：</p>
+<ol>
+<li>HashSet的底层其实是通过HashMap实现的。</li>
+<li>无法保证有序</li>
+<li>允许使用null，但是只能包含一个null</li>
+<li>不能包含重复的元素</li>
+</ol>
+</li>
+<li><p>HashSet保证元素唯一性和hashcode方法以及equals方法相关</p>
+</li>
+</ol>
+<p><strong>二. TreeSet</strong></p>
+<hr>
+<p>使用元素的自然顺序对元素进行排序，或者根据创建 set 时提供的 Comparator 进行排序，具体取决于使用的构造方法。</p>
+<ol>
+<li><p>特点：</p>
+<ol>
+<li>元素默认会被自动升序排序</li>
+<li>元素唯一性</li>
+</ol>
+</li>
+<li><p>构造方法</p>
+<ol>
+<li><p>TreeSet()</p>
+<p>构造一个新的空 set，该 set 根据其元素的自然顺序进行排序。</p>
+</li>
+<li><p>TreeSet(Comparator comparator)</p>
+<p>构造一个新的空 TreeSet，它根据指定比较器进行排序。</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>Map（映射）</strong></p>
+<p>一. Map&lt;K,V&gt;</p>
+<ol>
+<li><p>Map是映射的顶级接口，实现类主要有：HashMap(重点) HashTable(面试)。</p>
+</li>
+<li><p>特点：</p>
+<ol>
+<li>将键映射到值的对象（键值对）</li>
+<li>键唯一，值不唯一。即一个键只能映射一个值，一个值可以对应多个键。</li>
+<li>键值对在map中以entry结构储存。</li>
+<li>无法保证元素的存入顺序</li>
+</ol>
+</li>
+<li><p>主要方法：</p>
+<ol>
+<li><p>V put（K key，V value）</p>
+<p>将指定的值与此映射中的指定键关联（可选操作）。</p>
+<p>如果当前map中没有要放入的这个元素的键，可以直接添加到map中，返回NUll；</p>
+<p>如果当前map中对于要放入的元素的键已经存在了，则用新的值将原来该键对应的值覆盖掉,返回旧值；</p>
+</li>
+<li><p>Void clear()</p>
+<p>从此映射中移除所有映射关系。</p>
+</li>
+<li><p>Boolean containsKey（Object Key）</p>
+<p>如果此映射包含指定键的映射关系，则返回 true</p>
+</li>
+<li><p>boolean containsValue(Object value)</p>
+<p>如果此映射将一个或多个键映射到指定值，则返回 true</p>
+</li>
+<li><p>V get(Object key)</p>
+<p>返回指定键所映射的值；</p>
+<p>如果此映射不包含该键的映射关系，则返回 null。</p>
+</li>
+<li><p>boolean isEmpty()</p>
+<p>如果此映射未包含键-值映射关系，则返回 true。</p>
+</li>
+<li><p>void putAll(Map&lt;? extends K,? extends V&gt; m)</p>
+<p>从指定映射中将所有映射关系复制到此映射中（可选操作）。</p>
+</li>
+<li><p>V remove(Object key)</p>
+<p>如果存在一个键的映射关系，则将其从此映射中移除。</p>
+</li>
+<li><p>Set keySet()</p>
+<p>返回此映射中包含的键的 Set 视图。</p>
+</li>
+<li><p>Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet()</p>
+<p>返回此映射中包含的映射关系的 Set 视图</p>
+</li>
+</ol>
+</li>
+<li><p>遍历</p>
+<ol>
+<li><p>keySet获取到所有的key，遍历key，根据key去查找当前key对应的值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Integer&gt; keys = map.keySet();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i:keys) &#123;</span><br><span class="line">    System.out.println(i+<span class="string">&quot;:&quot;</span>+map.get(i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用entrySet方法来获取Entry的set集合，遍历set集合。调用Entry中的方法获取当前Entry的key和value</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Map.Entry&lt;Integer, String&gt;&gt; entries = map.entrySet();</span><br><span class="line"><span class="keyword">for</span> (Map.Entry&lt;Integer, String&gt; entry:entries) &#123;</span><br><span class="line">    System.out.println(entry.getKey()+<span class="string">&quot;:&quot;</span>+entry.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<p>一. HashMap</p>
+<hr>
+<ol>
+<li><p>数据结构：数组+链表</p>
+</li>
+<li><p>特点：</p>
+<ol>
+<li>null可以作为值和键，但是键只允许一个null，而值可以有多个null元素。</li>
+<li>键不能重复</li>
+<li>无法保证元素的存入顺序</li>
+<li>桶</li>
+</ol>
+</li>
+<li><p>构造方法：</p>
+<ol>
+<li><p>HashMap()</p>
+<p>构造一个具有默认初始容量 (16) 和默认加载因子 (0.75) 的空 HashMap。16*0.75=12</p>
+</li>
+<li><p>HashMap(int initialCapacity)</p>
+<p>构造一个带指定初始容量和默认加载因子 (0.75) 的空 HashMap。</p>
+</li>
+<li><p>HashMap(int initialCapacity, float loadFactor)</p>
+<p>构造一个带指定初始容量和加载因子的空 HashMap。</p>
+</li>
+</ol>
+</li>
+<li><p>注意：</p>
+<ol>
+<li>翻倍扩容，扩容后可能会出现rehash</li>
+<li>1.8之后，当链表的长度超过8时，将HashMap底层结构转为红黑树的结构。当链表的长度小于6时，再从红黑树的结构转回来</li>
+</ol>
+</li>
+</ol>
+<p>二. Hashtable</p>
+<hr>
+<p>从JDK1.2开始，才让Hashtable作为Map的实现类</p>
+<ol>
+<li><p>特点：</p>
+<ol>
+<li>任何非 null 对象都可以用作键或值，对于null的键和值，HashTable会抛出空指针异常。（有别于HashMap)</li>
+</ol>
+</li>
+<li><p>构造方法：</p>
+<ol>
+<li><p>Hashtable()</p>
+<p>用默认的初始容量 (11) 和加载因子 (0.75) 构造一个新的空哈希表</p>
+</li>
+</ol>
+</li>
+<li><p>HashMap和Hashtable的区别：</p>
+<ol>
+<li>HashMap允许键存在一个null，值允许有多个null，而对于Hashtable来说，键值都不允许为null,否则运行会抛出空指针异常；</li>
+<li>默认大小，HashMap为16，Hashtable为11</li>
+<li>HashMap线程不安全的，效率高；Hashtable线程安全的，效率低。</li>
+</ol>
+</li>
+</ol>
+<p>三. LinkedHashMap</p>
+<hr>
+<p>是HashMap的子类，可以确保元素存储的顺序；底层其实是维护了一个双重链表；</p>
+<ol>
+<li><p>构造方法：</p>
+<ol>
+<li><p>LinkedHashMap()</p>
+<p>构造一个带默认初始容量 (16) 和加载因子 (0.75) 的空插入顺序 LinkedHashMap 实例。</p>
+</li>
+</ol>
+</li>
+<li><p>注意：</p>
+<ol>
+<li>如果再使用map时，需要保证元素放入的顺序，这时可以使用LinkedHashMap，但效率低于HashMap。</li>
+</ol>
+</li>
+</ol>
+<p>迭代器（Iterator</p>
+<p>迭代器Iterator接口同Collection、Map，也是Java集合框架的成员，不同于两者的是其本身并非用来盛装其他对象，而是用来遍历访问Collection集合中的元素。（Map接口并没有实现Iterator）</p>
+<p>Iterator主要有以下方法：</p>
+<ol>
+<li><p>boolean hasNext()</p>
+<p>如果被迭代的集合元素还没有被遍历完，则返回true。</p>
+</li>
+<li><p>Object next()</p>
+<p>返回集合里的下一个元素</p>
+</li>
+<li><p>void remove()</p>
+<p>删除集合里上一次next()方法返回的元素</p>
+</li>
+</ol>
+<p>注意：</p>
+<ol>
+<li>Iterator仅用于遍历集合，本身不提供盛装对象的能力，使用时必须有一个被迭代的集合。</li>
+<li>当使用Iterator迭代访问Collection集合元素时，除了迭代器提供的remove()功能，Collection里的元素不允许被改变。</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2021/10/10/Java%E6%A0%B8%E5%BF%83/Java%E5%9F%BA%E7%A1%80/Java%E9%9B%86%E5%90%88-Map/">https://kunstudy.com/2021/10/10/Java%E6%A0%B8%E5%BF%83/Java%E5%9F%BA%E7%A1%80/Java%E9%9B%86%E5%90%88-Map/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/10/10/Linux/Linux%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">Linux基础命令</a>
+            
+            
+            <a class="next" rel="next" href="/2021/10/10/Java%E9%AB%98%E5%B9%B6%E5%8F%91/%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8-ConcurrentHashMap/">并发容器-ConcurrentHashMap</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>

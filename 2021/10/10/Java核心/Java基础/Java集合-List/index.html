@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>Java集合-List | kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Java集合-List</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">十月 10, 2021&nbsp;&nbsp;10:29:06</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <ul>
+<li>Collection</li>
+<li>List</li>
+<li>Set</li>
+<li>Map</li>
+<li>迭代器</li>
+</ul>
+<p><strong>Collection</strong></p>
+<blockquote>
+<h4 id="引出"><a href="#引出" class="headerlink" title="引出"></a>引出</h4></blockquote>
+<ul>
+<li>变量：只能存储一个数据，是最小的存储数据的容器。</li>
+<li>数组：长度固定，内容可变 ，可以存储多个数据类型一致的数据。</li>
+<li>集合：可以存储任意种类数据且长度可变。</li>
+</ul>
+<p>Java中包含了整个集合体系，有非常多的集合类，可以实现不同的功能；Collection是顶级接口，定义在<code>java.util</code>中，其下有：</p>
+<ol>
+<li>List子接口<ul>
+<li>ArrayList 实现类（下同）</li>
+<li>LinkedList</li>
+<li>Vector</li>
+<li>Stack 栈</li>
+</ul>
+</li>
+<li>Queue 子接口<ul>
+<li>LinkedList</li>
+</ul>
+</li>
+<li>Set 子接口<ul>
+<li>HashSet</li>
+<li>TreeSet </li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4></blockquote>
+<hr>
+<ol>
+<li><p><code>boolean add(Object obj)</code></p>
+<p>添加指定对象，并确保此 collection 包含指定的元素（可选操作）。</p>
+</li>
+<li><p><code>boolean addAll(Collection&lt;? extends E&gt; c)</code></p>
+<p>将指定 collection 中的所有元素都添加到此 collection 中（可选操作）。</p>
+</li>
+<li><p><code>void clear()</code></p>
+<p>移除此 collection 中的所有元素（可选操作）。</p>
+</li>
+<li><p><code>boolean contains(Object o)</code></p>
+<p>如果此 collection 包含指定的元素，则返回 true 。⭐</p>
+</li>
+<li><p><code>boolean containsAll(Collection&lt;?&gt; c)</code></p>
+<p>如果此 collection 包含指定 collection 中的所有元素，则返回 true ⭐</p>
+</li>
+<li><p><code>boolean equals(Object o)</code></p>
+<p>比较此 collection 与指定对象是否相等（根据集合中元素的顺序一一比较）</p>
+</li>
+<li><p><code>boolean isEmpty()</code></p>
+<p>如果此 collection 不包含元素，则返回 true。</p>
+</li>
+<li><p><code>boolean remove(Object o)</code></p>
+<p>从此 collection 中移除指定元素的单个实例，如果存在的话（可选操作）。</p>
+<p>默认移除集合中找到的第一个元素。</p>
+</li>
+<li><p><code>boolean removeAll(Collection&lt;?&gt; c)</code></p>
+<p>移除此 collection 中那些也包含在指定 collection 中的所有元素（可选操作）。</p>
+</li>
+<li><p><code>boolean retainAll(Collection&lt;?&gt; c)</code></p>
+<p>仅保留此 collection 中那些也包含在指定 collection 的元素（可选操作）。</p>
+</li>
+<li><p><code>int size()</code></p>
+<p>返回此 collection 中的元素数</p>
+</li>
+<li><p><code>Object[] toArray()</code></p>
+<p>返回包含此 collection 中所有元素的数组</p>
+</li>
+</ol>
+<p><strong>List</strong></p>
+<p>线程安全的List：synchronizedList()&amp;CopyOnWriteArrayList</p>
+<p>在Collection中，List集合是有序的，Developer可对其中每个元素的插入位置进行精确地控制，可以通过索引来访问、遍历元素。</p>
+<p>List集合中，常用的是ArrayList和LinkedList这两个类。其中，ArrayList底层通过数组实现，随着元素的增加而动态扩容。而LinkedList底层通过链表来实现，随着元素的增加不断向链表的后端增加节点。</p>
+<blockquote>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4></blockquote>
+<ol>
+<li><p>有序：可以保证元素放入的顺序。</p>
+<p>通过给每个元素编号，可以通过索引的方式来操作这个集合。</p>
+</li>
+<li><p>List中可以包含重复的元素。</p>
+</li>
+<li><p>List可以添加null元素，而且可以添加多个null元素</p>
+</li>
+</ol>
+<p><strong>ArrayList</strong></p>
+<p>ArrayList是Java集合框架中使用最多的一个类，是一个数组队列，线程不安全集合。它继承于AbstractList，实现了List, RandomAccess, Cloneable, Serializable接口。</p>
+<ul>
+<li>实现List，得到了List集合框架基础功能；</li>
+<li>实现RandomAccess，获得了快速随机访问存储元素的功能，RandomAccess是一个标记接口，没有任何方法；</li>
+<li>实现Cloneable，得到了clone()方法，可以实现克隆功能；</li>
+<li>实现Serializable，表示可以被序列化，通过序列化去传输，典型的应用就是hessian协议。</li>
+</ul>
+<p>扩容的问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt;  <span class="number">1</span>);<span class="comment">//右移 效率高</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化容量10-&gt;10+（10&gt;&gt;1）-&gt;15 -&gt;15+（15&gt;&gt;1）-&gt;22-&gt;33</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//通过以下代码进行数组的扩容</span></span><br><span class="line"></span><br><span class="line">elementData  = Arrays.copyOf(elementData, newCapacity);</span><br></pre></td></tr></table></figure>
+
+<p>具有如下特点：</p>
+<ul>
+<li>容量不固定，随着容量的增加而动态扩容（阈值基本不会达到）</li>
+<li>有序集合（插入的顺序==输出的顺序）</li>
+<li>插入的元素可以为null</li>
+<li>改查效率更高（相对于LinkedList来说）</li>
+<li>线程不安全</li>
+</ul>
+<blockquote>
+<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a><strong>LinkedList</strong></h3></blockquote>
+<p>LinkedList是一个双向链表，每一个节点都拥有指向前后节点的引用。相比于ArrayList来说，LinkedList的随机访问效率更低。</p>
+<p>它继承AbstractSequentialList，实现了List, Deque, Cloneable, Serializable接口。</p>
+<ul>
+<li>实现List，得到了List集合框架基础功能；</li>
+<li>实现Deque，Deque 是一个双向队列，也就是既可以先入先出，又可以先入后出，说简单些就是既可以在头部添加元素，也可以在尾部添加元素；</li>
+<li>实现Cloneable，得到了clone()方法，可以实现克隆功能；</li>
+<li>实现Serializable，表示可以被序列化，通过序列化去传输，典型的应用就是hessian协议。</li>
+</ul>
+<blockquote>
+<h3 id="ArrayList和LinkedList区别："><a href="#ArrayList和LinkedList区别：" class="headerlink" title="ArrayList和LinkedList区别："></a>ArrayList和LinkedList区别：</h3></blockquote>
+<ol>
+<li><p>ArrayList是基于数组的，而LinkedList基于链表的</p>
+</li>
+<li><p>ArrayList 查询快，增删慢；</p>
+<p>LInkedList 查询慢，增删快；</p>
+</li>
+<li><p>ArrayList、LinkedList使用场景</p>
+<p>查询业务多的情况下，适合ArrayList.</p>
+<p>增删业务多的情况下，适合LinkedList.</p>
+<p>如果不确定查询多还是增删多，就用ArrayList;</p>
+<p>二八法则：20%是增删相关,80%是查询相关</p>
+</li>
+</ol>
+<blockquote>
+<h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3></blockquote>
+<p>Vector是矢量队列，是JDK1.0版本添加的类。JDK1.2版本中做了变更，继承于AbstractList，实现了List, RandomAccess, Cloneable，继承了AbstractList。</p>
+<p>在Vector中存在一些方法功能和List接口中的功能是类似的，但是方法名不同这些方法不建议使用，但是也可以使用；</p>
+<ul>
+<li>实现了List；所以它是一个队列，支持相关的添加、删除、修改、遍历等功能。</li>
+<li>实现了RandmoAccess接口，即提供了随机访问功能。（RandmoAccess是java中用来被List实现，为List提供快速访问功能的。）在Vector中，我们即可以通过元素的序号快速获取元素对象；这就是快速随机访问。</li>
+<li>实现了Cloneable接口，即实现clone()函数。它能被克隆。</li>
+</ul>
+<p>Vector的扩容：初始容量10，扩容一倍 10-&gt;20-&gt;40-&gt;80</p>
+<p>和ArrayList不同，Vector中的操作是线程安全的(意味着执行效率低)。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2021/10/10/Java%E6%A0%B8%E5%BF%83/Java%E5%9F%BA%E7%A1%80/Java%E9%9B%86%E5%90%88-List/">https://kunstudy.com/2021/10/10/Java%E6%A0%B8%E5%BF%83/Java%E5%9F%BA%E7%A1%80/Java%E9%9B%86%E5%90%88-List/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/10/10/Java%E9%AB%98%E5%B9%B6%E5%8F%91/%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8-ConcurrentHashMap/">并发容器-ConcurrentHashMap</a>
+            
+            
+            <a class="next" rel="next" href="/2021/10/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8EJUC/">Java多线程与JUC</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>
