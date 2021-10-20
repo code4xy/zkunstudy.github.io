@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>GET和POST区别和请求编码 | kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">GET和POST区别和请求编码</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 14, 2021&nbsp;&nbsp;9:20:33</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="GET和POST的区别和请求编码的问题"><a href="#GET和POST的区别和请求编码的问题" class="headerlink" title="GET和POST的区别和请求编码的问题"></a>GET和POST的区别和请求编码的问题</h2><p><strong>GET和POST的本质区别是什么？</strong><br>    使用GET，form中的数据将编码到url中，而使用POST的form中的数据则在http协议的header中传输。在使用上，当且仅当请求幂等（字面意思是请求任意次返回同样的结果，本质是请求本身不会改变服务器数据和状态）时使用GET，当请求会改变服务器数据或状态时（更新数据，上传文件），应该使用POST。<br><strong>区别使用GET，POST意义何在？</strong><br>    重复访问使用GET方法请求的页面，浏览器会使用缓存处理后续请求。使用POST方法的form提交时，浏览器机遇POST将产生永久改变的假设，将让用户进行提交确认。当编成人员正确的使用GET，POST后，浏览器会给出很好的缓存配合，时响应速度更快。<br><strong>在form提交阶段的差别</strong><br>     form提交的第一步是创建数据集，并根据ENCTYPE对数据集进行编码。ENCTYPE有两个值：multipart/form-data，application/x-www-form-urlencoded（默认值），前者可同时用于GET，POST，后者只用于POST。然后进行数据传输–对于GET方法，数据集使用content type application/x-www-form-urlencoded编码并附在url后面，在这种模式下，数据严格限制为ASCII码；对于POST，使用content type编码字符集并将其构造成消息发送。<br><strong>在服务器处理部分的差别</strong><br>    原则上，除理GET和POST请求是没有分别的。但由于数据通过不同的方法编码，需要有不同的解码机制。所以，方法变化将导致处理请求的代码变化。比如对于cgi，处理GET时通过环境变量获得参数，处理POST请求时则通过标准输入(stdin) 获得数据。</p>
+<p><strong>从使用经验，我们有如下总结：</strong><br>1、get是把参数数据队列加到提交表单的ACTION属性所指的URL中，值和表单内各个字段一一对应，在URL中可以看到。post是通过HTTP post机制，将表单内各个字段与其内容放置在HTML HEADER内一起传送到ACTION属性所指的URL地址。用户看不到这个过程。<br>2、对于get方式，服务器端用Request.QueryString获取变量的值，对于post方式，服务器端用Request.Form获取提交的数据。两种方式的参数都可以用Request来获得。<br>3、get传送的数据量较小，不能大于2KB。post传送的数据量较大，一般被默认为不受限制。但理论上，IIS4中最大量为80KB，IIS5中为100KB。<br>4、get安全性非常低，post安全性较高。<br>5、<form method="get" action="a.asp?b=b">跟<form method="get" action="a.asp">是一样的，也就是说，action页面后边带的参数列表会被忽视；而<form method="post" action="a.asp?b=b">跟<form method="post" action="a.asp">是不一样的。</p>
+<p>另外</p>
+<p>Get请求有如下特性：它会将数据添加到URL中，通过这种方式传递到服务器，通常利用一个问号？代表URL地址的结尾与数据参数的开端，后面的参数每一个数据参数以“名称=值”的形式出现，参数与参数之间利用一个连接符&amp;来区分。<br>Post请求有如下特性：数据是放在HTTP主体中的，其组织方式不只一种，有&amp;连接方式，也有分割符方式，可隐藏参数，传递大批数据，比较方便。</p>
+<p>1、在URL中中文字符通常出现在以下两个地方：<br>(1)、Query String中的参数值，比如<a target="_blank" rel="noopener" href="http://search.china.alibaba.com/search/offer_search.htm?keywords=%E4%B8%AD%E5%9B%BD">http://search.china.alibaba.com/search/offer_search.htm?keywords=中国</a><br>(2)、servlet path，比如：<a target="_blank" rel="noopener" href="http://search.china.alibaba.com/selloffer/%E4%B8%AD%E5%9B%BD.html">http://search.china.alibaba.com/selloffer/中国.html</a></p>
+<p>2、出现乱码问题的原因主要是以下几方面：<br>(1)、浏览器：我们的客户端（浏览器）本身并没有遵循URI编码的规范（<a target="_blank" rel="noopener" href="http://www.w3.org/International/O-URL-code.html%EF%BC%89%E3%80%82">http://www.w3.org/International/O-URL-code.html）。</a><br>(2)、Servlet服务器：Servlet服务器的没有正确配置。<br>(3)、开发人员并不了解Servlet的规范和API的含义。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2021/09/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/GET%E5%92%8CPOST%E5%8C%BA%E5%88%AB%E5%92%8C%E8%AF%B7%E6%B1%82%E7%BC%96%E7%A0%81/">https://kunstudy.com/2021/09/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/GET%E5%92%8CPOST%E5%8C%BA%E5%88%AB%E5%92%8C%E8%AF%B7%E6%B1%82%E7%BC%96%E7%A0%81/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/09/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/">浏览器缓存机制</a>
+            
+            
+            <a class="next" rel="next" href="/2021/09/13/%E6%95%B0%E6%8D%AE%E5%BA%93/mysql/MySQL%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E3%80%81%E4%BA%8B%E5%8A%A1%EF%BC%8C%E9%94%81/">MySQL隔离级别、事务,锁</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>

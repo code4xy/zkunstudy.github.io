@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>浏览器缓存机制 | kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">浏览器缓存机制</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 14, 2021&nbsp;&nbsp;9:25:33</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p> <strong>概述</strong></p>
+<p>浏览器的缓存机制也就是我们说的HTTP缓存机制，其机制是根据HTTP报文的缓存标识进行的，所以在分析浏览器缓存机制之前，我们先使用图文简单介绍一下HTTP报文，<strong>HTTP报文</strong>分为两种：</p>
+<ol>
+<li><strong>HTTP请求(Request)报文</strong>，报文格式为：**请求行 – HTTP头(通用信息头，请求头，实体头) – 请求报文主体(只有POST才有报文主体)**，如下图:</li>
+</ol>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30L-i-MqBK5IsPKiHq3c_xSUCq.png"></p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30-ZOtPIC_OKFKxO-WmalNL4sf.png"></p>
+<p><strong>HTTP响应(Response)报文</strong>，报文格式为：<strong>状态行 – HTTP头(通用信息头，响应头，实体头) – 响应报文主体</strong>，如下图</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30j7cVJY9z1ike9WWG8_QGjay7.png" alt="img"></p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/300vjrArfMWQ7w7h_vYIXRvRoC.png" alt="img"></p>
+<p>注：<strong>通用信息头</strong>指的是请求和响应报文都支持的头域，</p>
+<p>分别为Cache-Control、Connection、Date、Pragma、Transfer-Encoding、Upgrade、Via；<strong>实体头</strong>则是实体信息的实体头域，分别为Allow、Content-Base、Content-Encoding、Content-Language、Content-Length、Content-Location、Content-MD5、Content-Range、Content-Type、Etag、Expires、Last-Modified、extension-header。这里只是为了方便理解，将通用信息头，响应头/请求头，实体头都归为了HTTP头。</p>
+<p><strong>二、缓存过程分析</strong></p>
+<p>浏览器与服务器通信的方式为应答模式，即是：<strong>浏览器发起HTTP请求 – 服务器响应该请求</strong>。那么浏览器第一次向服务器发起该请求后拿到请求结果，会根据响应报文中HTTP头的缓存标识，决定是否缓存结果，是则将请求结果和缓存标识存入浏览器缓存中，简单的过程如下图：</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30SJ6B9RIagMBY6Bc7S2vkKSu3.png" alt="img"></p>
+<p>由上图我们可以知道</p>
+<p>1、浏览器每次发起请求，都会先在浏览器缓存中查找该请求的结果以及缓存标识</p>
+<p>2、浏览器每次拿到返回的请求结果都会将该结果和缓存标识存入浏览器缓存中</p>
+<p>以上两点结论就是浏览器缓存机制的关键，他确保了每个请求的缓存存入与读取，只要我们再理解浏览器缓存的使用规则，那么所有的问题就迎刃而解了，本文也将围绕着这点进行详细分析。</p>
+<p>为了方便大家理解，这里我们根据是否需要向服务器重新发起HTTP请求将缓存过程分为两个部分，分别是<strong>强制缓存</strong>和<strong>协商缓存</strong> 。</p>
+<p><strong>2.1强制缓存</strong></p>
+<p><strong>强制缓存就是向浏览器缓存查找该请求结果，并根据该结果的缓存规则来决定是否使用该缓存结果的过程</strong>，强制缓存的情况主要有三种(暂不分析协商缓存过程)，如下：</p>
+<p>（1）不存在该缓存结果和缓存标识，强制缓存失效，则直接向服务器发起请求（跟第一次发起请求一致），如下图：</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30ThRw5TMP5GXcIzFUhJCiYVG-.png" alt="img"></p>
+<p>（2）存在该缓存结果和缓存标识，但是结果已经失效，强制缓存失效，则使用协商缓存（暂不分析），如下图</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30Bd_Ct_JmCV4IGWgVwrwonHCh.png" alt="img"></p>
+<p>（3）存在该缓存结果和缓存标识，且该结果没有还没有失效，强制缓存生效，直接返回该结果，如下图：</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30WBGAfz4BMLy-ZaljsVGF0Z9z.png" alt="img"></p>
+<p>那么强制缓存的缓存规则是什么？</p>
+<p>答：当浏览器向服务器发送请求的时候，服务器会将<strong>缓存规则</strong>放入HTTP响应的报文的HTTP头中和请求结果一起返回给浏览器，<strong>控制强制缓存的字段分别是Expires和Cache-Control</strong>，其中Cache-Conctrol的优先级比Expires高。</p>
+<p><strong>2.1.1Expires</strong></p>
+<p>Expires是HTTP/1.0控制网页缓存的字段，其值为服务器返回该请求的结果缓存的到期时间，即再次发送请求时，如果客户端的时间小于Expires的值时，直接使用缓存结果。</p>
+<p>Expires是HTTP/1.0的字段，但是现在浏览器的默认使用的是HTTP/1.1，那么在HTTP/1.1中网页缓存还是否由Expires控制？</p>
+<p>到了HTTP/1.1，Expires已经被Cache-Control替代，原因在于Expires控制缓存的原理是使用<strong>客户端的时间</strong>与<strong>服务端返回的时间</strong>做对比，如果客户端与服务端的时间由于某些原因（时区不同；客户端和服务端有一方的时间不准确）发生误差，那么强制缓存直接失效，那么强制缓存存在的意义就毫无意义。、</p>
+<p>那么Cache-Control又是如何进行控制的？</p>
+<p><strong>2.1.2Cache-Control</strong></p>
+<p>在HTTP/1.1中，Cache-Control是最重要的规则，主要用于控制网页缓存，主要取值为：</p>
+<p>（1）<strong>public</strong>：所有内容都将被缓存（客户端和代理服务器都可缓存）</p>
+<p>（2）<strong>private</strong>：所有内容只有客户端可以缓存，<strong>Cache-Control的默认取值</strong></p>
+<p>（3）<strong>no-cache</strong>：客户端缓存内容，但是是否使用缓存则需要经过协商缓存来验证决定</p>
+<p>（4）<strong>no-store</strong>：所有内容都不会被缓存，即不使用强制缓存，也不使用协商缓存</p>
+<p>（5）**max-age=xxx (xxx is numeric)**：缓存内容将在xxx秒后失效</p>
+<p>接下来，我们直接看一个例子，如下：</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30sQ8AGKjjQJY8Iqs6HsrOdc8-.png" alt="img"></p>
+<p>由上面的例子我们可以知道：</p>
+<p>（1）HTTP响应报文中expires的时间值，是一个绝对值</p>
+<p>（2）HTTP响应报文中Cache-Control为max-age=600，是相对值</p>
+<p>由于Cache-Control的优先级比expires，那么直接根据Cache-Control的值进行缓存，意思就是说在600秒内再次发起该请求，则会直接使用缓存结果，强制缓存生效。</p>
+<p>注：在无法确定客户端的时间是否与服务端的时间同步的情况下，Cache-Control相比于expires是更好的选择，所以同时存在时，只有Cache-Control生效。</p>
+<p>了解强制缓存的过程后，我们拓展性的思考一下：</p>
+<blockquote>
+<p>浏览器的缓存存放在哪里，如何在浏览器中判断强制缓存是否生效？</p>
+</blockquote>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30duC6ruzaPZZdrRQiMA8O8_yq.png" alt="img"></p>
+<p>这里我们以博客的请求为例，状态码为灰色的请求则代表使用了强制缓存，请求对应的Size值则代表该缓存存放的位置，分别为<strong>from memory cache</strong> 和 <strong>from disk cache</strong>。</p>
+<blockquote>
+<p>那么from memory cache 和 from disk cache又分别代表的是什么呢？什么时候会使用from disk cache，什么时候会使用from memory cache呢？</p>
+</blockquote>
+<p>from memory cache代表使用内存中的缓存，from disk cache则代表使用的是硬盘中的缓存，浏览器读取缓存的顺序为memory –&gt; disk。</p>
+<p>虽然我已经直接把结论说出来了，但是相信有不少人对此不能理解，那么接下来我们一起详细分析一下缓存读取问题，这里仍让以我的博客为例进行分析：<br><strong>访问<a target="_blank" rel="noopener" href="https://heyingye.github.io/">https://heyingye.github.io/</a> –&gt; 200 –&gt; 关闭博客的标签页 –&gt; 重新打开<a target="_blank" rel="noopener" href="https://heyingye.github.io/">https://heyingye.github.io/</a> –&gt; 200(from disk cache) –&gt; 刷新 –&gt; 200(from memory cache)</strong></p>
+<p>过程如下：</p>
+<p>（1）访问博客网站</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30QfXEFjUQhMUG6g9JshyYEnbp.png" alt="img"></p>
+<p>（2）关闭博客的标签页</p>
+<p>（3）重新打开博客</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30ZZrRV38tOehM3Tb698MQySna.png" alt="img"></p>
+<p>（4）刷新</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30q5bornu0puRmymO0_x-0FXeI.png" alt="img"></p>
+<p>看到这里可能有人小伙伴问了，最后一个步骤刷新的时候，不是同时存在着from disk cache和from memory cache吗？</p>
+<p>对于这个问题，我们需要了解内存缓存(from memory cache)和硬盘缓存(from disk cache)，如下:</p>
+<p>（1）<strong>内存缓存(from memory cache)<strong>：内存缓存具有两个特点，分别是</strong>快速读取</strong>和<strong>时效性</strong>：</p>
+<p>1、<strong>快速读取</strong>：内存缓存会将编译解析后的文件，直接存入该进程的内存中，占据该进程一定的内存资源，以方便下次运行使用时的快速读取。</p>
+<p>2、<strong>时效性</strong>：一旦该进程关闭，则该进程的内存则会清空。</p>
+<p>（2）**硬盘缓存(from disk cache)**：硬盘缓存则是直接将缓存写入硬盘文件中，读取缓存需要对该缓存存放的硬盘文件进行I/O操作，然后重新解析该缓存内容，读取复杂，速度比内存缓存慢。</p>
+<p>在浏览器中，浏览器会在<strong>js和图片等文件解析执行后直接存入内存缓存中</strong>，那么当刷新页面时只需直接从内存缓存中读取(from memory cache)；而<strong>css文件则会存入硬盘文件</strong>中，所以每次渲染页面都需要从硬盘读取缓存(from disk cache)。</p>
+<p><strong>2.2协商缓存</strong></p>
+<p><strong>协商缓存就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程</strong>，主要有以下两种情况：</p>
+<p>（1）协商缓存生效，返回304，如下</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30OK3o7ZD3zsTVJVE0qwrTs_97.png" alt="img"></p>
+<p>（2）协商缓存失败，返回200和请求结果，如下</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30iC1c-X0hWv-XnBhG0MyFpesx.png" alt="img"></p>
+<p>同样，协商缓存的标识也是在响应报文的HTTP头中和请求结果一起返回给浏览器的，控制协商缓存的字段分别有：<strong>Last-Modified / If-Modified-Since和Etag / If-None-Match</strong>，其中Etag / If-None-Match的优先级比Last-Modified / If-Modified-Since高。</p>
+<p><strong>2.2.1Last-Modified / If-Modified-Since</strong></p>
+<p>（1）Last-Modified是服务器响应请求时，返回该资源文件在服务器最后被修改的时间，如下：</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30LUFHzlQVhb4k3px9xOwMLCdg.png" alt="img"></p>
+<p>（2）If-Modified-Since则是客户端再次发起该请求时，携带上次请求返回的Last-Modified值，通过此字段值告诉服务器该资源上次请求返回的最后被修改时间。服务器收到该请求，发现请求头含有If-Modified-Since字段，则会根据If-Modified-Since的字段值与该资源在服务器的最后被修改时间做对比，若服务器的资源最后被修改时间大于If-Modified-Since的字段值，则重新返回资源，状态码为200；否则则返回304，代表资源无更新，可继续使用缓存文件，如下。</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30iQQok5pF5Nw6JbJ691bLckqf.png" alt="img"></p>
+<p><strong>2.2.2Etag / If-None-Match</strong></p>
+<p>（1）Etag是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成)，如下：</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30VcTixbjlVzDUcPoKjM30OkCD.png" alt="img"></p>
+<p>（2）If-None-Match是客户端再次发起该请求时，携带上次请求返回的唯一标识Etag值，通过此字段值告诉服务器该资源上次请求返回的唯一标识值。服务器收到该请求后，发现该请求头中含有If-None-Match，则会根据If-None-Match的字段值与该资源在服务器的Etag值做对比，一致则返回304，代表资源无更新，继续使用缓存文件；不一致则重新返回资源文件，状态码为200，如下。</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30HHm3dwrs38bAYPpCY1pMT8Eg.png" alt="img"></p>
+<p>注：Etag / If-None-Match优先级高于Last-Modified / If-Modified-Since，同时存在则只有Etag / If-None-Match生效。</p>
+<p><strong>三、总结</strong></p>
+<p>强制缓存优先于协商缓存进行，若强制缓存(Expires和Cache-Control)生效则直接使用缓存，若不生效则进行协商缓存(Last-Modified / If-Modified-Since和Etag / If-None-Match)，协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，重新获取请求结果，再存入浏览器缓存中；生效则返回304，继续使用缓存，主要过程如下：</p>
+<p><img src="https://www.mwcxs.top/static/upload/pics/2019/1/30SX0D2hqApuJ7Z44y609Z3RKp.png" alt="img"></p>
+<p>以上便是浏览器缓存的过程</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2021/09/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/">https://kunstudy.com/2021/09/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/09/16/Java%E6%A0%B8%E5%BF%83/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/HashMap%E8%A7%A3%E6%9E%90/">HashMap解析</a>
+            
+            
+            <a class="next" rel="next" href="/2021/09/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/GET%E5%92%8CPOST%E5%8C%BA%E5%88%AB%E5%92%8C%E8%AF%B7%E6%B1%82%E7%BC%96%E7%A0%81/">GET和POST区别和请求编码</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>
