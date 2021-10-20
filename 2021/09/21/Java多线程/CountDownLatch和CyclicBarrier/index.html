@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>CountDownLatch和CyclicBarrier的区别 | kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">CountDownLatch和CyclicBarrier的区别</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">九月 21, 2021&nbsp;&nbsp;21:07:13</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="CountDownLatch和CyclicBarrier的区别："><a href="#CountDownLatch和CyclicBarrier的区别：" class="headerlink" title="CountDownLatch和CyclicBarrier的区别："></a><strong>CountDownLatch和CyclicBarrier的区别</strong>：</h3><p>CountDownLatch:具有计数器的功能，等待其他线程执行完毕，主线程在继续执行，用于监听某些初始化操作，并且线程进行阻塞，等初始化执行完毕后，通知主线程继续工作执行。值得注意的是CountDownLatch计数的次数一定要与构造器传入的数字一致，比如构造器传入的是3，则countDown()一定要执行3次，否则线程将一直阻塞。CountDownLatch通常用来控制线程等待，它可以让线程等待倒计时结束，再开始执行。</p>
+<p>CyclicBrrier：翻译过来就是循环栅栏的意思，其作用就是多线程的进行阻塞，等待某一个临界值条件满足后，同时执行！假设有一个场景：每个线程代表一个跑步运动员，当运动员都准备好后，才一起出发，只要有一个人没有准备好，大家都等待！</p>
+<p>CountDownLatch: 一个线程(或者多个)， 等待另外N个线程完成某个事情之后才能执行。<br>CyclicBrrier: N个线程相互等待，任何一个线程完成之前，所有的线程都必须等待。</p>
+<p>1,CountdownLatch适用于所有线程通过某一点后通知方法,而CyclicBarrier则适合让所有线程在同一点同时执行 </p>
+<p>2,CountdownLatch利用继承AQS的共享锁来进行线程的通知,利用CAS来进行–,而CyclicBarrier则利用ReentrantLock的Condition来阻塞和通知线程</p>
+<p><strong>CountdownLatch 底层实现</strong></p>
+<p>我们先来看看CountdownLatch的构造方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public CountDownLatch(int count) &#123;</span><br><span class="line">        if (count &lt; 0) throw new IllegalArgumentException(&quot;count &lt; 0&quot;);</span><br><span class="line">        this.sync = new Sync(count);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先保证了count一定要大于零,然后初始化了一个Sync对象,在看看这个Sync对象是个什么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">private static final class Sync extends AbstractQueuedSynchronizer &#123;</span><br><span class="line">        private static final long serialVersionUID = 4982264981922014374L;</span><br><span class="line"></span><br><span class="line">        Sync(int count) &#123;</span><br><span class="line">            setState(count);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int getCount() &#123;</span><br><span class="line">            return getState();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected int tryAcquireShared(int acquires) &#123;</span><br><span class="line">            return (getState() == 0) ? 1 : -1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        protected boolean tryReleaseShared(int releases) &#123;</span><br><span class="line">            // Decrement count; signal when transition to zero</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                int c = getState();</span><br><span class="line">                if (c == 0)</span><br><span class="line">                    return false;</span><br><span class="line">                int nextc = c-1;</span><br><span class="line">                if (compareAndSetState(c, nextc))</span><br><span class="line">                    return nextc == 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Sync是CountdownLatch的静态内部类,继承了AbstractQueuedSynchronizer(即AQS,提供了一种实现阻塞锁和一系列依赖FIFO等待队列的同步器的工具,回头单讲)抽象类, 在Sync的构造方法中,调用了setState方法,可以视作初始化了一个标记来记录当前计数器的数量</p>
+<p>我们来看CountdownLatch的两个核心方法,await和countdown,先来看await</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void await() throws InterruptedException &#123;</span><br><span class="line">        //可以视作将线程阻塞</span><br><span class="line">        sync.acquireSharedInterruptibly(1);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>await调用的是AQS的方法,可以视作阻塞线程,具体实现在分析AQS的章节中展开 再来看看countdown方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void countDown() &#123;</span><br><span class="line">        sync.releaseShared(1);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用了sync的一个方法,再来看看这个方法的实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public final boolean releaseShared(int arg) &#123;</span><br><span class="line">        if (tryReleaseShared(arg)) &#123;</span><br><span class="line">            doReleaseShared();</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来看这个tryReleaseShared方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">protected boolean tryReleaseShared(int releases) &#123;</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                //获取标记位</span><br><span class="line">                int c = getState();</span><br><span class="line">                if (c == 0)</span><br><span class="line">                    return false;</span><br><span class="line">                int nextc = c-1;</span><br><span class="line">                //用cas的方式更新标记位</span><br><span class="line">                if (compareAndSetState(c, nextc))</span><br><span class="line">                    return nextc == 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到在调用tryReleaseShared实际上是将标记位-1并且返回标记位是否为0,如果标记位为0 那么调用的doReleaseShared可以视作将阻塞的线程放行,这样整个的流程就通了</p>
+<p><strong>CyclicBarrier 底层实现</strong></p>
+<p>老规矩先看构造方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public CyclicBarrier(int parties, Runnable barrierAction) &#123;</span><br><span class="line">        if (parties &lt;= 0) throw new IllegalArgumentException();</span><br><span class="line">        this.parties = parties;</span><br><span class="line">        this.count = parties;</span><br><span class="line">        this.barrierCommand = barrierAction;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这边传入了两个对象简单的记录了一下存值,我们直接查看一下关键的await方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public int await() throws InterruptedException, BrokenBarrierException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return dowait(false, 0L);</span><br><span class="line">        &#125; catch (TimeoutException toe) &#123;</span><br><span class="line">            throw new Error(toe); // cannot happen</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来看dowait的实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">/** The lock for guarding barrier entry */</span><br><span class="line">    private final ReentrantLock lock = new ReentrantLock();</span><br><span class="line">    /** Condition to wait on until tripped */</span><br><span class="line">    private final Condition trip = lock.newCondition();</span><br><span class="line">    /** 省略部分代码 **/</span><br><span class="line">private int dowait(boolean timed, long nanos)</span><br><span class="line">        throws InterruptedException, BrokenBarrierException,</span><br><span class="line">               TimeoutException &#123;</span><br><span class="line">        final ReentrantLock lock = this.lock;</span><br><span class="line">        lock.lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            final Generation g = generation;</span><br><span class="line">            //判断是否被打断</span><br><span class="line">            if (g.broken)</span><br><span class="line">                throw new BrokenBarrierException();</span><br><span class="line"></span><br><span class="line">            if (Thread.interrupted()) &#123;</span><br><span class="line">                breakBarrier();</span><br><span class="line">                throw new InterruptedException();</span><br><span class="line">            &#125;</span><br><span class="line">            //将计数器-1 即在构造方法中赋值的count</span><br><span class="line">            int index = --count;</span><br><span class="line">            if (index == 0) &#123;  // tripped</span><br><span class="line">            //如果所有的线程都执行完毕即count=0时</span><br><span class="line">                boolean ranAction = false;</span><br><span class="line">                try &#123;</span><br><span class="line">                    //执行传入的方法</span><br><span class="line">                    final Runnable command = barrierCommand;</span><br><span class="line">                    if (command != null)</span><br><span class="line">                        command.run();</span><br><span class="line">                    ranAction = true;</span><br><span class="line">                    //唤醒所有线程</span><br><span class="line">                    nextGeneration();</span><br><span class="line">                    return 0;</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    if (!ranAction)</span><br><span class="line">                        breakBarrier();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            //如果count没有到0那么阻塞当前线程</span><br><span class="line">            for (;;) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    if (!timed)</span><br><span class="line">                        trip.await();</span><br><span class="line">                    else if (nanos &gt; 0L)</span><br><span class="line">                        nanos = trip.awaitNanos(nanos);</span><br><span class="line">                &#125; catch (InterruptedException ie) &#123;</span><br><span class="line">                    if (g == generation &amp;&amp; ! g.broken) &#123;</span><br><span class="line">                        breakBarrier();</span><br><span class="line">                        throw ie;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        // We&#x27;re about to finish waiting even if we had not</span><br><span class="line">                        // been interrupted, so this interrupt is deemed to</span><br><span class="line">                        // &quot;belong&quot; to subsequent execution.</span><br><span class="line">                        Thread.currentThread().interrupt();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                if (g.broken)</span><br><span class="line">                    throw new BrokenBarrierException();</span><br><span class="line"></span><br><span class="line">                if (g != generation)</span><br><span class="line">                    return index;</span><br><span class="line"></span><br><span class="line">                if (timed &amp;&amp; nanos &lt;= 0L) &#123;</span><br><span class="line">                    breakBarrier();</span><br><span class="line">                    throw new TimeoutException();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从代码中可以看到,CyclicBarrier是利用Lock的condition方法来进行线程的阻塞和唤醒,类似Object.wait()和notifyAll()在count不为0时阻塞,在count=0时唤醒所有线程</p>
+<p><strong>总结</strong></p>
+<p>1,CountdownLatch适用于所有线程通过某一点后通知方法,而CyclicBarrier则适合让所有线程在同一点同时执行 2,CountdownLatch利用继承AQS的共享锁来进行线程的通知,利用CAS来进行–,而CyclicBarrier则利用ReentrantLock的Condition来阻塞和通知线程</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2021/09/21/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/CountDownLatch%E5%92%8CCyclicBarrier/">https://kunstudy.com/2021/09/21/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/CountDownLatch%E5%92%8CCyclicBarrier/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/10/08/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%92%8C%E9%94%81%E4%BC%98%E5%8C%96/">synchronized实现原理和锁优化</a>
+            
+            
+            <a class="next" rel="next" href="/2021/09/16/Java%E6%A0%B8%E5%BF%83/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/HashMap%E8%A7%A3%E6%9E%90/">HashMap解析</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>
