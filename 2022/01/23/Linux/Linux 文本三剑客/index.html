@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="K">
+
+
+    <meta name="subtitle" content="kunstudy">
+
+
+    <meta name="description" content="kunstudy">
+
+
+    <meta name="keywords" content="kunstudy">
+
+
+<title>kunstudy</title>
+
+
+
+    <link rel="icon" href="/%E6%B2%99%E6%BB%A9_%E5%A4%AA%E9%98%B3.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Zk&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Zk&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">文章</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title"></h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">K</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">一月 23, 2022&nbsp;&nbsp;10:11:23</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="正则表达式及Linux-文本三剑客"><a href="#正则表达式及Linux-文本三剑客" class="headerlink" title="正则表达式及Linux 文本三剑客"></a>正则表达式及Linux 文本三剑客</h2><p><strong>先了解正则表达式</strong>：</p>
+<p>应用场景：过滤有规律的内容，尤其是日志。</p>
+<p>先了解grep命令-“全面搜索正则表达式，并将其打印出来”。</p>
+<p><strong>语法格式：</strong> grep [参数]</p>
+<p><strong>常用参数：</strong></p>
+<table>
+<thead>
+<tr>
+<th>-i</th>
+<th>搜索时，忽略大小写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>只输出匹配行的数量</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>只列出符合匹配的文件名，不列出具体的匹配行</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>列出所有的匹配行，显示行号</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>查询多文件时不显示文件名</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>不显示不存在、没有匹配文本的错误信息</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示不包含匹配文本的所有行</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>匹配整词</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>匹配整行</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>递归搜索</td>
+</tr>
+<tr>
+<td>-q</td>
+<td>禁止输出任何结果，已退出状态表示搜索是否成功</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>打印匹配行距文件头部的偏移量，以字节为单位</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>与-b结合使用，打印匹配的词据文件头部的偏移量，以字节为单位</td>
+</tr>
+</tbody></table>
+<p>新建test文本，内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# cat test.txt </span><br><span class="line">I am xiangyang!</span><br><span class="line">I study linux.</span><br><span class="line"></span><br><span class="line">I like badminton ball,billiard ball and chinese chess!</span><br><span class="line">my blog is http://www.kunstudy.com</span><br><span class="line">our size is http://www.kunstudy.com</span><br><span class="line">my qq is 2958253141</span><br><span class="line"></span><br><span class="line">not 2958251111</span><br><span class="line"></span><br><span class="line">my god,i am not xiangxiang ,but xiangyang!</span><br><span class="line">[root@localhost test]# </span><br></pre></td></tr></table></figure>
+
+<p>配合grep命令来使用正则表达式：</p>
+<ul>
+<li>‘^’ 以…开头的行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# grep &#x27;^my&#x27; test.txt </span><br><span class="line">my blog is http://www.kunstudy.com</span><br><span class="line">my qq is 2958253141</span><br><span class="line">my god,i am not xiangxiang ,but xiangyang!</span><br><span class="line">[root@localhost test]# </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>‘$’以…结束的尾</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# grep &#x27;1$&#x27; test.txt </span><br><span class="line">my qq is 2958253141</span><br><span class="line">not 2958251111</span><br><span class="line">[root@localhost test]# </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>‘^$’ 空行</li>
+</ul>
+<p>主要的作用是排除空行显示</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# grep -v  &#x27;^$&#x27; test.txt </span><br><span class="line">I am xiangyang!</span><br><span class="line">I study linux.</span><br><span class="line">I like badminton ball,billiard ball and chinese chess!</span><br><span class="line">my blog is http://www.kunstudy.com</span><br><span class="line">our size is http://www.kunstudy.com</span><br><span class="line">my qq is 2958253141</span><br><span class="line">not 2958251111</span><br><span class="line">my god,i am not xiangxiang ,but xiangyang!</span><br><span class="line">[root@localhost test]#</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>‘.’ 表示任意一个字符</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# grep &#x27;.&#x27; test.txt </span><br><span class="line">I am xiangyang!</span><br><span class="line">I study linux.</span><br><span class="line">I like badminton ball,billiard ball and chinese chess!</span><br><span class="line">my blog is http://www.kunstudy.com</span><br><span class="line">our size is http://www.kunstudy.com</span><br><span class="line">my qq is 2958253141</span><br><span class="line">not 2958251111</span><br><span class="line">my god,i am not xiangxiang ,but xiangyang!</span><br><span class="line">[root@localhost test]#</span><br></pre></td></tr></table></figure>
+
+<p>例子：匹配出以’.’结尾的行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# grep &#x27;\.$&#x27; test.txt </span><br><span class="line">I study linux.</span><br><span class="line">[root@localhost test]#</span><br></pre></td></tr></table></figure>
+
+<p>其中的’\‘为转义字符。</p>
+<ul>
+<li><p>‘\‘  转义字符：去除原有特殊含义</p>
+</li>
+<li><p>‘*’ 前一个字符连续出现0次或者0次以上</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.1fca82a9lz1c.webp" alt="image"></p>
+<ul>
+<li>‘.*’ 所有内容，任意内容</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.541ycx0ooxw0.webp" alt="image"></p>
+<p>展示每一行中以第一个o结尾的行。但是显示的是每一行中最后一个o结尾。</p>
+<p>正则特色：正则表达式的贪婪性，’.*’表示所有或者连续出现的时候，表现出尽可能多的贪婪匹配。</p>
+<ul>
+<li>[] [abc] 1次匹配1个字符，匹配任何一个字符（a或b或c）</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.49wdzu83oea0.webp" alt="image"></p>
+<p>[a-z],[A-Z],[0-9] </p>
+<p>[]里面的内容去掉特殊含义</p>
+<p><img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.5ya6fg3nawc0.webp" alt="image"></p>
+<ul>
+<li><p>‘[ ^ abc]’  去除abc以外的字符</p>
+</li>
+<li><p>‘+’ 前一个字符连续出现1个或者1个以上</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# egrep &#x27;w+&#x27; test.txt </span><br><span class="line">my blog is http://www.kunstudy.com</span><br><span class="line">our size is http://www.kunstudy.com</span><br><span class="line">[root@localhost test]#</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# egrep &#x27;[0-9]+&#x27; test.txt </span><br><span class="line">my qq is 2958253141</span><br><span class="line">not 2958251111</span><br><span class="line">[root@localhost test]# egrep -o &#x27;[0-9]+&#x27; test.txt </span><br><span class="line">2958253141</span><br><span class="line">2958251111</span><br><span class="line">[root@localhost test]#</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>‘|’ 在扩展正则中表示  或者</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# egrep &#x27;my|s&#x27; test.txt </span><br><span class="line">I study linux.</span><br><span class="line">I like badminton ball,billiard ball and chinese chess!</span><br><span class="line">my blog is http://www.kunstudy.com</span><br><span class="line">our size is http://www.kunstudy.com</span><br><span class="line">my qq is 2958253141</span><br><span class="line">my god,i am not xiangxiang ,but xiangyang!</span><br><span class="line">[root@localhost test]# egrep -o &#x27;my|s&#x27; test.txt </span><br><span class="line">s</span><br><span class="line">s</span><br><span class="line">s</span><br><span class="line">s</span><br><span class="line">my</span><br><span class="line">s</span><br><span class="line">s</span><br><span class="line">s</span><br><span class="line">s</span><br><span class="line">s</span><br><span class="line">my</span><br><span class="line">s</span><br><span class="line">my</span><br><span class="line">[root@localhost test]#</span><br></pre></td></tr></table></figure>
+
+<p>[] 与|的区别：</p>
+<p>[]:表示一次匹配一个字符</p>
+<p>|:匹配单词的时候</p>
+<ul>
+<li>‘()’ 被括起来的内容，表示一个整体（一个字符）</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/zkunstudy/images-host@master/myblog/image.4rizm3het0o0.webp" alt="image"></p>
+<ul>
+<li>‘{}’  表示连续出现 </li>
+</ul>
+<p>例如  o{n,m} 前一个字母o，至少连续出现n次，最多连续出现m次。</p>
+<p>o{n}前一个字母o，连续出现n次。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# egrep -o &#x27;w&#123;3&#125;&#x27; test.txt </span><br><span class="line">www</span><br><span class="line">www</span><br><span class="line">[root@localhost test]#</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>‘?’ 连续出现，前一个字符出现0次或1次</li>
+</ul>
+<p><strong>三剑客</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>特点</th>
+<th>场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>grep</td>
+<td>过滤</td>
+<td>过滤速度是最快的</td>
+</tr>
+<tr>
+<td>sed</td>
+<td>替换，修改文件内容，取行</td>
+<td>如果要进行替换，修改文件内容，取出某个范围的内容</td>
+</tr>
+<tr>
+<td>awk</td>
+<td>取列，统计计算</td>
+<td>取列，对比，比较，统计，计算</td>
+</tr>
+</tbody></table>
+<p>[^abc]: </p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>K</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://kunstudy.com/2022/01/23/Linux/Linux%20%E6%96%87%E6%9C%AC%E4%B8%89%E5%89%91%E5%AE%A2/">https://kunstudy.com/2022/01/23/Linux/Linux%20%E6%96%87%E6%9C%AC%E4%B8%89%E5%89%91%E5%AE%A2/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/11/20/%E7%AE%97%E6%B3%95/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/"></a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© K |Email @2958253141@qq.com </span>
+    </div>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    </span>
+</footer>
+
+    </div>
+</body>
+
+</html>
